@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+int main() {
+
+    int i;
+    float rezultat;
+    float n;
+    float e;
+	printf("Unesite bazu: ");
+    if(!scanf("%f", &n)){
+        printf("Nije unesen broj!");
+        return 0;
+    }
+    printf("Unesite eksponent: ");
+    if(!scanf("%f",&e)){
+        printf("Nije unesen broj!");
+        return 0;
+    }
+    if( e - (int)e){
+        printf("Uneseni broj nije cjelobrojan!");
+        return 0;
+    }
+    rezultat = 1;
+    float e2 = e;
+    if(e<0){
+        e2= -1*e;
+    }
+    for(i=1; i<=e2;i++){
+        rezultat = rezultat*n;
+        
+
+    }
+    if(e<0){
+        rezultat = 1/rezultat;
+    }
+    printf("%g^%.0f = %g", n, e, rezultat);
+
+    
+    
+	return 0;
+}
