@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int iznos;
+    int i;
+    int djelilac = 50;
+    int rezultat;
+    int ostatak;
+
+	printf("Unesite iznos: ");
+    scanf("%d", &iznos);
+    for(i=1; i<=6;i++){
+        rezultat = iznos/djelilac;
+        ostatak = iznos-rezultat*djelilac;
+        
+        printf("%d novcanica od %d KM \n", rezultat, djelilac);
+        if(i==1 || i==4){
+            djelilac = (2*djelilac)/5;
+        }
+        else {
+            djelilac = djelilac/2;
+        }
+        
+        iznos = ostatak;
+    }
+    
+	return 0;
+}
