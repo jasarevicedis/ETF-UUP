@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+int main() {
+    int x = 0;
+    int i;
+    // broj djeljivih sa 5, 7, 11
+    int a = 0;
+    int b = 0;
+    int c = 0;
+
+    int niz[1000];
+	printf("Unesite brojeve: \n");
+    for(i=0;i>=0;i++){
+        scanf("%d", &niz[x]);
+        if(niz[x] == -1){
+            break;
+        }
+        if(niz[x]%5 == 0 && niz[x]%7 != 0 && niz[x]%11 != 0){
+            a = a+1;
+        }
+        else if(niz[x]%7 == 0 && niz[x]%5 != 0 && niz[x]%11 != 0){
+            b = b+1;
+        }
+        else if(niz[x]%11 == 0 && niz[x]%5 != 0 && niz[x]%7 != 0){
+            c = c+1;
+        }
+        if(niz[x]%5 == 0 && niz[x]%7 == 0){
+            a = a+1;
+            b = b+1;
+        }
+        else if(niz[x]%5 == 0 && niz[x]%11 == 0){
+            c = c+1;
+            a = a+1;
+        }
+        else if(niz[x]%11 == 0 && niz[x]%7 == 0){
+            c = c+1;
+            b = b+1;
+        }
+        else if(niz[x]%11 == 0 && niz[x]%15 == 0 && niz[x]%7 == 0){
+            c = c+1;
+            a = a+1;
+            b = b+1;
+        }
+
+        x += x;
+        
+    }
+    printf("Djeljivih sa 5: %d \n", a);
+    printf("Djeljivih sa 7: %d \n", b);
+    printf("Djeljivih sa 11: %d \n", c);
+
+
+	return 0;
+}
