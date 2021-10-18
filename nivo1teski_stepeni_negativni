@@ -1,0 +1,58 @@
+#include <stdio.h>
+
+int main() {
+    double ostatak;
+    double unos;
+    double novi_unos;
+    int minute, sekunde;
+    printf("Unesite stepene: ");
+    scanf("%lf", &unos);
+    if(unos>1000 || unos<-1000){
+        printf("Unos nije ispravan!");
+        return 0;
+    }
+
+    //svodjenje na interval 0-360
+    
+    if(unos>360){
+        int kolicnik = (int)unos/360;
+         ostatak = unos - kolicnik*360;
+        novi_unos = ostatak;
+        ostatak = ostatak-(int)ostatak;
+    }
+    if(unos<360 && unos>0){
+        
+        novi_unos = (int)unos;
+        ostatak = unos - novi_unos;
+    }
+    if(unos == 0.00){
+        novi_unos = unos;
+    }
+    
+    if(unos<-360){
+        int kolicnik = (int)unos/360;
+        ostatak = unos - kolicnik*360;
+        novi_unos = 360 + ostatak;
+        ostatak = (-1)*ostatak;
+        ostatak =novi_unos - (int)novi_unos;
+    }
+    if(unos<0 && unos > -360){
+        novi_unos = 360-(unos*(-1));
+    }
+    if(ostatak<0){
+        ostatak = (-1)*ostatak;
+    }
+    //double ostatak =  novi_unos - (int)novi_unos;
+    minute =(int)(ostatak*60);
+    ostatak = ostatak*60-minute;
+    if(minute>= 60){
+       
+    }
+    
+    sekunde = (int)(ostatak*60);
+
+    
+    printf("%g = %d^ %d\' %d\'\'", unos, (int)novi_unos, minute, sekunde);
+    
+return 0;
+}
