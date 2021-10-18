@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int i,j,n, korak, x, y;
+	printf("Unesite n: ");
+    scanf("%d", &n);
+    printf("Unesite korak diskretizacije: ");
+    scanf("%d", &korak);
+    printf("Unesite pocetnu vrijednost x: ");
+    scanf("%d", &x);
+    float x2 = (float)x;
+    float y2 = (float)y;
+    
+
+    printf("x     y=f(x)\n");
+    for(i=0;i<12;i++){
+        printf("-");
+    }
+    printf("\n");
+    for(j=0;j<n; j++){
+        printf("%.1f",x2);
+        for(i=0; i<3;i++){
+            printf(" ");
+        }
+        y2 = pow(x2,3)+ 5*pow(x2,2) - 7*x2 + 14;
+        printf("%.2f", y2);
+        printf("\n");
+        x2=x2+korak;
+    }
+    
+	return 0;
+}
