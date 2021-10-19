@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    int i,j;
+    int x=0;
+    do {
+        printf("Unesite broj elemenata niza: ");
+        scanf("%d", &n);
+        if(n>50 || n<=0)
+            printf("Unos neispravan!\n");   
+    }
+    while(n>50 || n<=0);
+    double niz[50];
+    printf("Unesite %d brojeva: ", n);
+    for(i =0; i<n;i++){
+        scanf("%lf", &niz[i]);
+        
+    }
+    printf("\n");
+    for(j=n-1; j>=0 ; j--){
+        printf("%g, ", niz[j]);
+        
+
+    }
+
+	return 0;
+}
