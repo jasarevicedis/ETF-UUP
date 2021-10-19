@@ -1,0 +1,123 @@
+#include <stdio.h>
+
+int main() {
+    char tarik,bojan,mirza;
+     // koliko ima od svake hrane
+    int a=0;
+    int b=0;
+    int c=0;
+    double suma;
+    
+	printf("Unesite jelo za Tarika: ");
+    scanf("%c", &tarik);
+    printf("Unesite jelo za Bojana: ");
+    scanf(" %c", &bojan);
+    printf("Unesite jelo za Mirzu: ");
+    scanf(" %c", &mirza);
+
+    double p1 = 6.80;
+    double p2 = 8.00;
+    double p3 = 5.30;
+    double h1 = 3.30;
+    double h2 = 3.00;
+    double h3 = 5.00;
+    double c1 = 5.00;
+    double c2 = 3.90;
+    double c3 = 6.00;
+    
+    
+    switch (tarik) {
+    case 'P':
+       a=a+1;
+       break;
+    case 'H':
+       b=b+1;
+       break;
+    case 'C':
+       c=c+1;
+       break;
+    }
+    switch (bojan) {
+    case 'P':
+       a=a+1;
+       break;
+    case 'H':
+       b=b+1;
+       break;
+    case 'C':
+       c=c+1;
+       break;
+    }
+    switch (mirza) {
+    case 'P':
+       a=a+1;
+       break;
+    case 'H':
+       b=b+1;
+       break;
+    case 'C':
+       c++;
+       break;
+    }
+
+    double suma1 = p1*a + h1*b + c1*c;
+    double suma2 = p2*a + h2*b + c2*c;
+    double suma3 = p3*a + h3*b + c3*c;
+    if(suma1<suma2 && suma1<suma3){
+        suma = suma1;
+        printf("Najjeftiniji je Restoran \"Kod konja i konjusara\" (%.2f KM).\n", suma);
+    }
+    if(suma2<suma1 && suma2<suma3){
+        suma = suma2;
+        printf("Najjeftiniji je Fast-food \"Trovac\" (%.2f KM).\n", suma);
+    }
+    if(suma3<suma2 && suma3<suma1){
+        suma = suma3;
+        printf("Najjeftiniji je Bistro \"Lorelei\" (%.2f KM).\n", suma);
+    }
+    
+    double restoran_cijena;
+    double mincijena;
+    double rcijena1, rcijena2, rcijena3;
+    rcijena1 = 0.9*p1*a + h1*b +c1*c;
+    rcijena2 = p1*a + 0.9*h1*b +c1*c;
+    rcijena3 = p1*a + h1*b +0.9*c1*c;
+
+    if(rcijena1<rcijena2 && rcijena1<rcijena3){
+        mincijena = rcijena1;
+    }
+    if(rcijena2<rcijena3 && rcijena2<rcijena1){
+        mincijena = rcijena2;
+    }
+    if(rcijena3<rcijena2 && rcijena3<rcijena1){
+        mincijena = rcijena3;
+    }
+   
+    
+
+
+    /*if(a!=0){
+        px=0.9*p1;
+        restoran_cijena = px*a +h1*b + c1*c;
+    }
+    if(a==0 && c!=0){
+        cx=0.9*c1;
+        restoran_cijena = p1*a  +h1*b + cx*c ;
+
+    }
+    else {
+        hx = 0.9*h1;
+        restoran_cijena = p1*a  +hx*b   + c1*c;
+
+    }
+    */
+    
+    
+    if(mincijena < suma && suma != suma1 ){
+        printf("Sa popustom bi Restoran bio jeftiniji (%.2f KM).", mincijena);
+    }
+
+
+
+	return 0;
+}
