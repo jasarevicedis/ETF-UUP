@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    int i=0;
+    int j, k;
+    float niz[100];
+    int x=0;
+
+    printf("Unesite broj clanova niza: ");
+    scanf("%d", &n);
+    printf("Unesite niz: ");
+	do {
+        scanf("%f", &niz[i]);
+        i++;
+    }while (i<n);
+
+    for(j=0;j<n;j++){
+        for(k=0;k<n;k++){
+            if(niz[j] == niz[k]){
+                x++;
+            }
+            
+        }
+    }
+  
+    if(n%2 ==1){
+        printf("NE");
+    }
+    else if(x/2==n){
+        printf("DA");
+    }
+    else {
+        printf("NE");
+    }
+
+    
+    
+	return 0;
+}
