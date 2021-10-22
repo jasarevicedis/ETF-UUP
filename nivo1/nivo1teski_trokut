@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <math.h>
+
+
+int main() {
+    const double pi=3.14159;
+    double y = 0.0001;
+    double x1,y1,x2,y2,x3,y3; //koordinate
+    double a,b,c; //stranice
+	printf("Unesite koordinate tacke t1: ");
+    scanf("%lf %lf", &x1, &y1);
+    printf("Unesite koordinate tacke t2: ");
+    scanf("%lf %lf", &x2, &y2);
+	printf("Unesite koordinate tacke t3: \n");
+    scanf("%lf %lf", &x3, &y3);
+
+    a = sqrt((x1-x2)*(x1-x2)+ (y1-y2)*(y1-y2));
+    b = sqrt((x3-x2)*(x3-x2)+ (y3-y2)*(y3-y2));
+    c = sqrt((x1-x3)*(x1-x3)+ (y1-y3)*(y1-y3));
+    
+//ok
+
+    double alfa, beta, gama;
+    
+    alfa = acos((b*b + c*c - a*a)/(2*b*c));
+    beta = acos((a*a + c*c - b*b)/(2*a*c));
+    gama = acos((b*b + a*a - c*c)/(2*b*a));
+
+    alfa = (alfa*180)/pi;
+    beta = (beta*180)/pi;
+    gama = (gama*180)/pi;
+
+    double s = (a+b+c)/2;
+    double p = sqrt(s*(s-a)*(s-b)*(s-c));
+
+    
+
+    //odredjivanje trougla
+    double razlika1 = a-b;
+    double razlika2 = c-b;
+    double razlika3 = a-c;
+    if(razlika1<0){
+        razlika1 = (-1)*razlika1;
+    }
+    if(razlika2<0){
+        razlika2 = (-1)*razlika2;
+    }
+    if(razlika3<0){
+        razlika3 = (-1)*razlika3;
+    }
+
+    double max_ugao;
+    if(a>=b && a>=c){
+        max_ugao = alfa;
+    }
+    if(c>=b && c>=a){
+        max_ugao = gama;
+    }
+    if (b>=c && b>=a){
+        max_ugao = beta;
+    }
+    double test_ugao= max_ugao - 90;
+    if(test_ugao<0){
+        test_ugao = (-1)*test_ugao;
+    }
+
+
+    if((p-0)<y){
+        printf("Linija\n");
+    }
+    if(razlika1<y && razlika2<y && razlika3<y){
+        printf("Jednakostranicni\n");
+    }
+    if(((razlika1<y && razlika2>y && razlika3>y) || (razlika2<y && razlika1>y && razlika3>y) || (razlika3<y && razlika1>y && razlika2>y))&& (p-0)>y){
+        if((test_ugao)<y){
+            printf("Pravougli\n");
+        }
+        printf("Jednakokraki\n");
+    }
+    else{
+    
+    
+    if(razlika1>y && razlika2>y && razlika3>y){
+        if((test_ugao)<y){
+            printf("Pravougli\n");
+        }
+        printf("Raznostranicni\n");
+    }
+    else{
+    if((test_ugao)<y){
+            printf("Pravougli\n");
+        }
+    }
+    }
+
+    
+
+    //izracunavanje ugla
+    int stepen = (int)max_ugao;
+    double ostatak = max_ugao - stepen;
+    int minute = (int)(ostatak*60);
+    ostatak =ostatak*60-minute;
+    int sekunde = (int)(ostatak*60);
+
+    printf("Najveci ugao ima %d stepeni, %d minuta i %d sekundi.", stepen, minute, sekunde);
+	return 0;
+}
