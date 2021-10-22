@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+int main() {
+    int p,q,r,s;
+    int i,j;
+	printf("Unesite dimenzije matrice A (p q): ");
+    scanf("%d %d", &p, &q);
+    if(p<=0 || q<=0){
+        printf("Neispravne dimenzije matrice! ");
+        return 0;
+    }
+    if(p>10 || q>10){
+        printf("Matrica A je prevelika!");
+        return 0;
+    }
+    printf("Unesite dimenzije matrice B (r s): ");
+    scanf("%d %d", &r, &s);
+    if(r<=0 || s<=0){
+        printf("Neispravne dimenzije matrice! ");
+        return 0;
+    }
+    if(r>10 || s>10){
+        printf("Matrica B je prevelika!");
+        return 0;
+    }
+    if(p!=r){
+        printf("Matrice nisu saglasne za konkatenaciju! ");
+        return 0;
+    }
+
+    int a[9][9];
+    int b[9][9];
+    int c[9][9];
+
+    printf("Matrica A: ");
+
+    for(i=0;i<p;i++){
+        printf("%d. red: ", i+1);
+        for(j=0;j<q;j++){
+            scanf("%d", &a[i][j]);
+        }
+        
+    }
+
+    printf("Matrica B: ");
+
+    for(i=0;i<r;i++){
+        printf("%d. red: ", i+1);
+        for(j=0;j<s;j++){
+            scanf("%d", &b[i][j]);
+        }
+        
+    }
+    
+    
+    
+    int k, l;
+    printf("Matrica C: \n");
+    for(k=0;k<p;k++){
+        for(l=0;l<q+s;l++){
+            if(l<q){
+                c[k][l]=a[k][l];
+            }
+            if(l>=q){
+                c[k][l]=b[k][l-4];
+            }
+            printf("   %d", c[k][l]);
+        }
+        printf("\n");
+    }
+	return 0;
+}
