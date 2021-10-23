@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    int i,j;
+    char matrica[20][20];
+    int x,y;
+
+    printf("Unesite broj tacaka: ");
+    scanf("%d", &n);
+    
+    while(n<=0 || n>10){
+        printf("Pogresan unos\n");
+        printf("Unesite broj tacaka: ");
+        scanf("%d", &n);
+    }
+    for(i=0;i<=19;i++){
+        for(j=0;j<=19;j++){
+            matrica[i][j]=0;
+        }
+        
+    }
+    int x2,y2;
+    for(i=0;i<n;i++){
+        printf("Unesite %d. tacku: ", i+1);
+        scanf("%d %d", &x, &y);
+        if(x>x2){
+            x2=x;
+        }
+        if(y>y2){
+            y2=y;
+        }
+        while(x<0 || x>19 ||y<0 || y>19){
+            printf("Pogresan unos\n");
+            printf("Unesite %d. tacku: ", i+1);
+            scanf("%d %d", &x, &y);
+        }
+        matrica[y][x]=1;
+    }
+    //ispisavanje zvjezdice
+    for(i=0;i<20;i++){
+        for(j=0;j<20;j++){
+            if(matrica[i][j]==1){
+                printf("*");
+            }
+            else {
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
+
+    
+        
+	return 0;
+}
