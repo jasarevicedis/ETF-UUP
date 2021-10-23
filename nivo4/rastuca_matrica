@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int matrica[100][100], i, j, n;
+	
+    printf("Unesite n: ");
+    scanf("%d",&n);
+
+    //---------------------------------------
+    for(i=0;i<n;i++){
+        for(j=0;j<n;j++){
+            matrica[i][j]=j-i;
+        }
+    }
+    //---------------------------------------
+
+    printf("Matrica glasi:\n");
+    for (i=0; i<n; i++)
+        for (j=0; j<n; j++)
+            printf("%4d", matrica[i][j]);
+    return 0;
+}
