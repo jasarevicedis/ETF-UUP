@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main() {
+    int dec2bin(short);
+    short dec;
+    scanf("%hu", &dec);
+	int bin = dec2bin(dec);
+    printf("%d", bin);
+	return 0;
+}
+int dec2bin(short dec){
+    int bin=0;    
+    int x;
+    int k=1;
+    while(dec!=0){
+        x=dec%2;
+        bin = bin+ x*k;
+        k=k*10;
+        dec = dec/2;
+    }
+    return bin;
+    }
