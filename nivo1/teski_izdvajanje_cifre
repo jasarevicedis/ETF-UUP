@@ -1,0 +1,88 @@
+#include <stdio.h>
+
+
+int main() {
+    int n, c, a, b,cmax;//cmax je broj cifara unesenog broja, radi poredjenja s unesenim c
+	printf("Unesite broj: \n");
+    scanf("%d", &n);
+    if(n>=1000000 || n<=-1000000){
+        printf("Neispravan unos!");
+        return 0;
+    }
+    
+    cmax=0;
+    if(n<0){
+        n =(-1)*n;
+    }
+    if(n/10<1){
+        cmax=1;
+    }
+    else {
+        if(n/100<1){
+            cmax=2;
+        }
+        else {
+            if(n/1000<1){
+                cmax=3;
+            }
+            else{
+                if(n/10000<1){
+                    cmax=4;
+                }
+                else {
+                    if(n/100000<1){
+                        cmax=5;
+                    }
+                    else{
+                        if(n/1000000<1){
+                            cmax=6;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    printf("Koju cifru zelite kvadrirati: ");
+    scanf("%d", &c);
+    if(c>cmax || c==0){
+        printf("Neispravna cifra! ");
+        return 0;
+    }
+    //--------------------------------------------------
+    
+    //---------------------------------------------
+    int x = cmax-c;
+    
+    int djelilac;
+    if(x==0){
+        djelilac=1;
+    }
+    if(x==1){
+        djelilac=10;
+    }
+    if(x==2){
+        djelilac=100;
+    }
+    if(x==3){
+        djelilac=1000;
+    }
+    if(x==4){
+        djelilac=10000;
+    }
+    if(x==5){
+        djelilac=100000;
+    }
+    int kolicnik =(int)(n/djelilac);
+    
+    
+    if(n/djelilac<1){
+        kolicnik  = n;
+    }
+    a = kolicnik%10;
+    b=a*a;
+    
+    printf("Izdvojena cifra je %d, a njen kvadrat je %d", a,b);
+	return 0;
+}
+
