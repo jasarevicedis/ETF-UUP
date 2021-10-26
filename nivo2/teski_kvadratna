@@ -1,0 +1,89 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    double x1,x2;
+    int a,b,c;
+    double y = 0.001;
+    double y2 = 0.1;
+    int k=0; //provjera za tacno
+    
+	printf("Unesite koeficijente a, b i c: ");
+    scanf("%d %d %d", &a, &b, &c);
+
+    double det;//determinanta
+    det = b*b-4*a*c;
+    if(det<0){
+        printf("Rjesenja su imaginarni brojevi.");
+        return 0;
+    }
+    else {
+        double x1const=((-1)*b-sqrt(det))/(2*a);//tacna rjesenja
+        double x2const=((-1)*b+sqrt(det))/(2*a);
+        if(x1>x2){
+            x1const=((-1)*b+sqrt(det))/(2*a);
+            x2const=((-1)*b-sqrt(det))/(2*a);
+        }
+       
+        
+        do {
+            printf("Unesite rjesenje x1: ");
+            scanf("%lf", &x1);
+            double razlika = x1-x1const;
+            if(razlika<0){
+                razlika = razlika*(-1);
+            }
+        
+            if(razlika<y){
+                printf("Tacno\n");
+                k=1;
+            }
+            else if(razlika<y2 && razlika>=y && x1>x1const){
+                printf("Priblizno vece\n");
+            }
+            else if(razlika<y2 && razlika>y && x1<x1const){
+                printf("Priblizno manje\n");
+            }
+            else if(razlika>=y2 && x1>x1const){
+                printf("Vece\n");
+            }
+            else if(razlika>=y2 && x1<x1const ){
+                printf("Manje\n");
+
+            }
+        }while (k!=1);
+        k=0;
+
+        do {
+            printf("Unesite rjesenje x2: ");
+            scanf("%lf", &x2);
+            double razlika = x2-x2const;
+            if(razlika<0){
+                razlika = razlika*(-1);
+            }
+        
+            if(razlika<=y){
+                printf("Tacno\n");
+                k=1;
+            }
+            else if(razlika<y2 && razlika>=y && x2>x2const){
+                printf("Priblizno vece\n");
+            }
+            else if(razlika<y2 && razlika>y && x2<x2const){
+                printf("Priblizno manje\n");
+            }
+            else if(razlika>=y2 && x2>x2const){
+                printf("Vece\n");
+            }
+            else if(razlika>=y2 && x2<x2const ){
+                printf("Manje\n");
+
+            }
+        }while (k!=1);
+        
+      //printf("%lf %lf", x1const, x2const); 
+    }
+    
+    
+	return 0;
+}
