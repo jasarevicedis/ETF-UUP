@@ -1,0 +1,58 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    double niz1[100];
+    int i=0;
+    double niz2[100];
+    double presjek[100];
+	printf("Unesite elemente 1.niza (-1 kraj): \n");
+    while(1){
+        scanf("%lf", &niz1[i]);
+        if(niz1[i]==-1) break;
+        i++;
+    }
+    int j=0;
+    int x=0;
+    printf("Unesite elemente 2.niza (-1 kraj): \n");
+    while(1){
+        scanf("%lf", &niz2[j]);
+        if(niz2[j]==-1) {break;};
+        j++;
+    }
+    int k,l;
+    
+    for(k=0;k<i;k++){
+        for (l=0;l<j;l++){
+            if(niz1[k]==niz2[l]){
+                presjek[x]=niz1[k];
+                x++;
+            }
+            
+        }
+    }
+    if(x==0){
+        printf("Presjek unesenih nizova je prazan skup!");
+    }
+    else{
+    printf("Presjek unesenih nizova je: ");
+    for(k=0;k<x;k++){
+        for(l=0;l<k;l++){
+            if(presjek[l] == presjek[k]){
+                presjek[l]= -1;
+            }
+        }
+    }
+    for (k=0;k<x;k++){
+        if(k<x-1 && presjek[k]!=-1){
+            printf("%g, ", presjek[k]);
+        }
+        else if(k==x-1 && presjek[k]!=-1) {
+            printf("%g",presjek[k]);
+        }
+    }
+    }
+    
+    
+	return 0;
+}
