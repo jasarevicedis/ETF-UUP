@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int n;
+    int k;
+    int z,i;
+    double niz[19];
+    do{
+	printf("Unesite broj elemenata niza: ");
+    scanf("%d", &n);
+    if(n>20 || n<=0){
+        printf("Unos neispravan!\n");
+    }
+    }while(n>20 || n<=0);
+    
+   
+    printf("Unesite %d brojeva: \n", n);
+    for(k=0;k<n;k++){
+        scanf("%lf", &niz[k]);
+        
+    }
+
+    printf("Unesite broj decimala za zaokruzivanje: ");
+    scanf("%d", &z);
+    printf("Unesite broj decimala za ispis: ");
+    scanf("%d", &i);
+    double razlika1, razlika2;
+    double manji,veci;
+    for(k=0;k<n;k++){
+        //if (round(niz[k])-niz[k]<0.1 && round(niz[k])-niz[k]>0)
+            
+        niz[k]=(niz[k]*pow(10,z));
+        manji= round(niz[k]);
+        veci = ceil(niz[k]);
+        razlika1 = niz[k]- manji;
+        razlika2 = veci-niz[k];
+        if(razlika1>razlika2){
+            niz[k]= veci;
+        }
+        else {
+            niz[k]=manji;
+        }
+        
+        niz[k]=niz[k]/pow(10,z);
+        if(niz[k]==-0){
+            niz[k]=0;
+        } 
+
+    }
+    printf("{");
+    for(k=0;k<n;k++){
+        if(k<n-1)
+            printf("%.*lf, ", i,niz[k]);
+        else if(k==n-1){
+            printf("%.*lf", i, niz[k]);
+        }
+    }
+    printf("}");
+	return 0;
+}
