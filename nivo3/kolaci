@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int main() {
+    int n;//broj kolacica
+    int zelje[1000];
+    int k,j;
+    int broj=0;
+    for(k=0;k<1000;k++){
+        scanf("%d", &zelje[k]);
+        if(zelje[k]==-1) break;
+    }
+    scanf("%d", &n);
+    if(n==0){
+        printf("Nijedan ucenik nije dobio kolace");
+        return 0;
+    }
+    for(j=0;j<k;j++){
+        if(n==0){
+            break;
+        }
+        
+        if(n<zelje[j]){
+            broj++;
+            break;
+        }
+        n=n-zelje[j];
+        broj++;
+
+    }
+    if(broj%10==1 && broj!=11){
+        printf("%d ucenik je dobio kolace", broj);
+    }
+    else if((broj%10==2 )&& broj!=12 ){
+        printf("%d ucenika su dobila kolace", broj);
+    }
+    else {
+        printf("%d ucenika je dobilo kolace", broj);
+    }
+	return 0;
+}
