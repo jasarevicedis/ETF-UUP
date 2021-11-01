@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+int main() {
+    int korijen (int);
+    int n;
+    int rez;
+    
+	scanf("%d", &n);
+    double root;
+    
+    rez = korijen(n);
+    if(rez!=(int)rez || rez<0){
+        rez = -1;
+    }
+    printf("%d",rez);
+	return 0;
+}
+int korijen(int n){
+    
+    double root, k;
+    if(n<0){
+        root = -1;
+        return root;
+    }
+    int rezultat;
+    root = n/2;
+    k=0;
+    
+    while(root!=k){
+        k = root;
+        root = (n/k + k)/2;
+    }
+    if(root!=(int)root ){
+        root = -1;
+    }
+    if(n==1){
+        root=1;
+        return root;
+    }
+    
+    return root;
+}
