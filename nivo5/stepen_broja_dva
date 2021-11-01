@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+int main() {
+    int stepen_broja_dva (int n);
+    int n;
+    int a;
+    a= stepen_broja_dva(n);
+	printf("%d",a);
+	return 0;
+}
+int stepen_broja_dva (int n){
+    int bool;
+    do {
+        if(n==1){
+            bool=1;
+            return bool;
+        }
+        if(n%2==1){
+            bool=0;
+            return bool;
+        }
+        if(n==2){
+            bool = 1;
+            return bool;
+        }
+        n=n/2;
+        
+        
+    }while (n>=2);
+    return 0;
+}
+
+
+
