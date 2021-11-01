@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    int a,b;
+    int NZD (int a, int b);
+    n = NZD(a,b);
+	printf("%d", n);
+	return 0;
+}
+int NZD (int a, int b){
+    int x;
+    int k;
+    int i;
+    if(a>b){
+        k=b;
+    }
+    else if(a<b){
+        k=a;
+    }
+    else if(a==b){
+        x=a;
+        return x;
+
+    }
+    for(i=1;i<=k;i++){
+        if(a%i == 0 && b%i == 0){
+            x=i;
+            
+        }
+    }
+    return x;
+}
