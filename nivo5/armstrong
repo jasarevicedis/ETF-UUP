@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int armstrong(int n);
+	printf("Lekcija 5: Funkcije, Armstrong");
+	return 0;
+}
+int armstrong(int n){
+    int cifra,stepen=0,suma=0;
+    int test = n;
+    int cifre=0;
+    int i;
+    while(test!=0){
+        test = test/10;
+        cifre++;
+    }
+    test=n;
+    while(test!=0){
+        cifra=test%10;
+        suma=suma+pow(cifra, cifre);
+        test /=10;
+    }
+    if(suma==n){
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
