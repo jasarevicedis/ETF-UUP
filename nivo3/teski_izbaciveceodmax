@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+int main() {
+    double niz[100];
+    int i, vel;
+	
+    printf("Unesite broj clanova niza: ");
+    scanf("%d",&vel);
+    printf("Unesite clanove niza: ");
+    for(i=0; i<vel; i++)
+        scanf("%lf", &niz[i]);
+
+    /* === OVDJE UBACITI KOD === */
+    int k,l,j;
+    
+    int brojac;
+    double x;// x trazeni broj;
+    int max = 0;
+    for(k=0;k<vel;k++){
+        brojac=1;
+        for(l=k+1;l<vel;l++){
+            if(niz[k]==niz[l]){
+                brojac++;
+            }
+        }
+        if(brojac>max){
+            x=niz[k];
+            max=brojac;
+        }
+        else if(brojac==max){
+            if(niz[k]<x){
+                x=niz[k];
+            }
+        }
+    }
+    
+    int m,n;
+    for(m=0;m<vel;m++){
+        if(niz[m]>x){
+            for(n=m;n<vel;n++){
+                niz[n]=niz[n+1];
+            }
+            vel--;
+            m--;
+        }
+        
+        
+    }
+    
+
+    
+    
+    //-------------------------
+
+    printf("Nakon izbacivanja niz glasi:\n");
+    for (i=0; i<vel; i++)
+        printf("%g ", niz[i]);
+    return 0;
+}
