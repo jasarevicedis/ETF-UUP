@@ -1,0 +1,69 @@
+
+#include <stdio.h>
+
+int main() {
+  int niz[100];
+  int i = 0;
+  int m;
+  int n;
+  int change;
+  printf("Unesite brojeve: \n");
+  do {
+    scanf("%d", &niz[i]);
+    i++;
+    if(i>100){
+        break;
+    }
+  } while (niz[i - 1] > 0);
+
+  int cifre[1000];
+  int k, l, j;
+  l = 0;
+  for (k = 0; k < i - 1; k++) {
+    do {
+      cifre[l] = niz[k] - ((int)(niz[k] / 10)) * 10;
+      l++;
+      niz[k] = (int)(niz[k] / 10);
+    }while(niz[k] >= 1);
+  }
+
+  /* trenutno imamo niz cifara ali koje se mogu ponavljati i nisu poredane po
+   velicini*/
+  for (i = 0; i < l; i++) {
+    for (j = i + 1; j < l; j++) {
+      if (cifre[i] == cifre[j]) {
+        for (k = j; k < l; k++) {
+          cifre[k] = cifre[k + 1];
+        }
+        j--;
+        l--;
+      }
+    }
+  }
+  
+  
+  for (m = 0; m < l; m++) {
+
+    for (n = m + 1; n < l; n++) {
+      if (cifre[n] < cifre[m]) {
+        change = cifre[m];
+        cifre[m] = cifre[n];
+        cifre[n] = change;
+      }
+    }
+  }
+  
+
+  printf("Cifre: ");
+  for (j = 0; j < l; j++) {
+      if(j!=l-1){
+        printf("%d,", cifre[j]);
+      }
+      else {
+          printf("%d", cifre[j]);
+      }
+  }
+  printf(".");
+
+  return 0;
+}
