@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <math.h>
+int main() {
+    int broj_sadrzan(unsigned int a, unsigned int b);
+    unsigned int a,b;
+    int rez;
+	printf("Unesite broj a: \n");
+    scanf("%d", &a);
+    printf("Unesite broj b: \n");
+    scanf("%d", &b);
+    rez=broj_sadrzan(a,b);
+    if(rez){
+        printf("ISTINA");
+    }
+    else{
+        printf("NEISTINA");
+    }
+	return 0;
+}
+int broj_sadrzan(unsigned int a, unsigned int b){
+    int cifre, stepen;
+    int x=0;
+    int y;
+    if(a!=0){
+        if(b!=0){
+            cifre=log10(b)+1;
+            stepen=pow(10,cifre);
+            while(a>0){
+                if(a%stepen==b){
+                    x=1;
+                }
+                a=a/10;
+            }
+        }
+        else {
+            while(a>0){
+                y=a%10;
+                if(y==b){
+                    x=1;
+                    break;
+                }
+                else {
+                    a=a/10;
+                }
+            }
+        }
+    }
+    else {
+        if(b==0){
+            x=1;
+        }
+        
+    }
+    if(x){
+            return 1;
+        }
+        else {
+            return 0;
+        }
+}
