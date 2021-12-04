@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main() {
+	int niz1[]={1, 3, 2};
+	int niz2[10]={0, 3, 2, 2, 2, 4, 6, 1, 9, 10};
+
+	return 0;
+}
+void ispisi(int *niz,int n){
+    int i;
+    int x;
+    printf("{");
+    for(i=0;i<n;i++){
+        x=*(niz+i);
+        printf("%d", x);
+        if(i!=n-1){
+            printf(", ");
+        }
+    }
+    printf("}");
+}
