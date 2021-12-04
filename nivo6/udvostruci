@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+/* Ovdje napisite funkciju udvostruci */
+void udvostruci(int *niz, int n){
+    int *poc;
+    int *kraj = (niz+n);
+    int i=0;
+    for(poc=niz;poc!=kraj;poc++){
+        *poc*=2;
+    }
+}
+
+int main() {
+    int i,niz[3]={1,0,-2};
+    udvostruci(niz,3);
+    for(i=0;i<3;i++)
+        printf("%d ", niz[i]);
+	return 0;
+}
