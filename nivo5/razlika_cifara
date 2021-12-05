@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <math.h>
+
+int main(){
+    
+    return 0;
+}
+void oduzmi_cifre(int niz[], int n){
+    int i;
+    int a,b,cifra,r;
+    int s;
+    for(i=0;i<n;i++){
+        s=0;
+        r=0;
+        if(niz[i]<0){
+            niz[i]=(-1)*niz[i];
+        }
+        s=niz[i];
+        //s koristimo kao privremeni storage za clan niza
+        if(s<10 &&s>0){
+            niz[i]=0;
+            
+        }
+        else {
+            int brojac=0;
+            while(s>=10){
+                
+                a=s%10;
+                b=(s/10)%10;
+                s/=10;
+                cifra=a-b;
+                if(cifra<0){
+                    cifra*=-1;
+                }
+                r=r+cifra*pow(10,brojac);
+                brojac++;
+            }
+            niz[i]=r;
+        }
+
+    }
+    
+    
+}
+
+ 
+
