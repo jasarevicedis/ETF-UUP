@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+/* Ovdje napisite funkciju obrni_cifre */
+void obrni_cifre(int *pok, int n){
+    int i;
+    int storage, rezultat;
+    for(i=0;i<n;i++){
+        storage=*pok;
+        rezultat=0;
+        while(storage!=0){
+            rezultat=rezultat*10;
+            rezultat=rezultat+storage%10;
+            storage=storage/10;
+        }
+        *pok =rezultat;
+        pok++;
+    }
+}
+
+int main() {
+    int niz1[5] = {1,23,321,918,33};
+    obrni_cifre(niz1, 5);
+    int i;
+    for(i=0; i<5; i++) printf("%d ", niz1[i]);
+    return 0;
+}
