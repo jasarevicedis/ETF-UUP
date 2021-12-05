@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+int main(){
+    int n,i,j;
+    printf("Unesite broj studenata: ");
+    scanf("%d", &n);
+    double bodovi[500];
+    printf("Unesite bodove na ispitu: ");
+    for(i=0;i<n;i++){
+        scanf("%lf",&bodovi[i]);
+        if(bodovi[i]>20 || bodovi[i]<0){
+            printf("Rezultat ispita nije u trazenom intervalu");
+            return 0;
+        }
+    }
+    double temp;
+    //sortirajmo niz po velicini
+    for(i=0;i<n;i++){
+        for(j=i+1;j<n;j++){
+            if(bodovi[i]<bodovi[j]){
+                temp=bodovi[i];
+                bodovi[i]=bodovi[j];
+                bodovi[j]=temp;
+            }
+        }
+    }
+    //medijan
+    double medijan;
+    if(n%2==1){
+        medijan=bodovi[(int)(n/2)];
+    }
+    else {
+        medijan= (bodovi[n/2]+bodovi[n/2-1])/2;
+    }
+    printf("Medijan je: %.1lf", medijan);
+    return 0;
+    
+}
