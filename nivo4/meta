@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+int main() {
+    int n;
+    int i,j,centar,udaljenost,x,y,x_dis,y_dis,brojac;;
+    int matrica[100][100];
+    do {
+        printf("Unesite broj N: ");
+	    scanf("%d", &n);
+        if(n<=1 || n>100 || n%2==0){
+            printf("Neispravna vrijednost!\n");
+        }
+    }while (n<=1 || n>100 || n%2==0);
+
+    printf("Unesite matricu: ");
+	for(i=0;i<n;i++){
+        for(j=0;j<n;j++){
+            scanf("%d", &matrica[i][j]);
+        }
+    }
+    x=(int)(n/2);
+    y=(int)(n/2);
+    centar=matrica[x][y];
+    brojac=0;
+    for(i=0;i<n;i++){
+        for(j=0;j<n;j++){
+            //u kojem 'prstenu' matrice se polje (i,j) nalazi, mozemo naci ovako
+            x_dis=x-i;
+            if(x_dis<0){
+                x_dis*=(-1);
+            }
+            y_dis=x-j;
+            if(y_dis<0){
+                y_dis*=(-1);
+            }
+            if(x_dis>=y_dis){
+                udaljenost=x_dis;
+            }
+            else{
+                udaljenost=y_dis;
+            }
+            int kordinata=centar-udaljenost;
+            if(kordinata<0){
+                kordinata*=(-1);
+            }
+            //odredjivanje broja u tom polju
+            if(matrica[i][j]==kordinata){
+                
+
+                brojac++;
+            }
+        }
+        
+    }
+    if(brojac==n*n){
+        printf("DA");
+    }
+    else {
+        printf("NE");
+    }
+    //printf("(%d)", brojac);
+
+	return 0;
+}
