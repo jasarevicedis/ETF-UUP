@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <string.h>
+
+char *izbaci_viska_razmake (char *str){
+    int duzina = strlen(str);
+    //printf("%d", duzina);
+    int i,j;
+    for(i=0;i<duzina;i++){
+        if(str[0]==' '){
+            for(j=0;j<(duzina-1);j++){
+                str[j]=str[j+1];
+            }
+            str[j]='\0';
+            duzina--;
+            i--;
+            continue;
+            
+        }
+        if(str[i]==' ' && str[i-1]==' '){
+            for(j=i;j<(duzina-1);j++){
+                str[j]=str[j+1];
+            }
+            //str[j-1]='\0';
+            duzina--;
+            i--;
+        }
+
+    }
+    if(duzina!=0){
+        while(str[duzina-1]==' '){
+        
+        str[duzina-1]='\0';
+        duzina--;
+    }
+    }
+    
+    
+    return str;
+}
+
+int main() {
+	printf("Lekcija 7: Stringovi, Uklanjanje razmaka");
+	return 0;
+}
