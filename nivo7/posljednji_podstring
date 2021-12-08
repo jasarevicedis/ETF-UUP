@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+int pronadji_posljednji(const char *str, const char *trazi){
+    int duzina=0, DUZINA=0;
+    int i,j;
+    const char *pok;
+    
+    for(i=0;trazi[i]!='\0';i++){
+        duzina++;
+    }
+    //printf("(%d)", duzina);
+    //duzina=duzina substringa
+
+    for(i=0;str[i]!='\0';i++){
+        DUZINA++;
+    }
+    //printf("(%d)", DUZINA);
+    //DUZINA=duzina stringa
+    int poklapanje=0;
+    int brojac;
+    int indeks;
+    if(duzina>DUZINA){
+        return -1;
+    }
+    else{
+        for(i=0;i<DUZINA-duzina+1;i++){
+        brojac=0;
+        for(j=0;j<duzina;j++){
+            
+            if(str[i+j]==trazi[j]){
+                brojac++;
+            }
+            
+        }
+        if(brojac==duzina){
+                indeks=i;
+                poklapanje++;
+        }
+        else if(brojac!=duzina && poklapanje==0) {
+            indeks=-1;
+        }    
+    }
+    return indeks;
+    }
+    
+}
+
+int main() {
+	printf("Lekcija 7: Stringovi, Posljednji podstring");
+	return 0;
+}
