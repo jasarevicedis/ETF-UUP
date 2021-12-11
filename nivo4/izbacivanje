@@ -1,0 +1,78 @@
+#include <stdio.h>
+
+int main() {
+    int m,n;
+    int i,j;
+    double all_avg,row_avg,col_avg;
+    double mat[100][100];
+    //unos
+    do {
+        printf("Unesite vrijednosti M i N: ");
+        scanf("%d %d", &m, &n);
+        if(m>100 || n>100 || m<=0 || n<=0){
+            printf("Vrijednosti su van opsega!\n");
+        }
+    }while (m>100 || n>100 || m<=0 || n<=0);
+
+    //unos matrice
+
+    all_avg=0;//ukupna srednja vrijenost
+    printf("Unesite clanove matrice: \n");
+    for(i=0;i<m;i++){
+        for(j=0;j<n;j++){
+            scanf("%lf", &mat[i][j]);
+            all_avg+=mat[i][j];
+        }
+    }
+    all_avg=all_avg/(m*n);
+    // redovi
+    int k,l;
+    for(i=0;i<m;i++){
+        row_avg=0;
+        for(j=0;j<n;j++){
+            row_avg+=mat[i][j];
+        }
+        row_avg=row_avg/n;
+        //printf("(%lf)", row_avg);
+        if(row_avg>all_avg){
+            for(k=i;k<m;k++){
+                for(l=0;l<n;l++){
+                    mat[k][l]=mat[k+1][l];
+                }
+            }
+            m--;
+            i--;
+        }
+    }
+
+    //kolone
+
+    for(j=0;j<n;j++){
+        col_avg=0;
+        for(i=0;i<m;i++){
+            col_avg+=mat[i][j];
+        }
+        col_avg=col_avg/m;
+        if(col_avg>all_avg){
+            for(k=j;k<n;k++){
+                for(l=0;l<m;l++){
+                    mat[l][k]=mat[l][k+1];
+                }
+                
+            }
+            n--;
+            j--;
+        }
+    }
+    //printf("(%lf %lf %lf)", all_avg,row_avg, col_avg);
+    printf("Nakon izbacivanja matrica glasi:\n");
+    for(i=0;i<m;i++){
+        for(j=0;j<n;j++){
+            printf("%6.1lf", mat[i][j]);
+        }
+        printf("\n");
+    }
+    
+	
+	return 0;
+}
