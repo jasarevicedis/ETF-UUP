@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+
+int main() {
+    int n,i,j;
+    double broj;
+    double niz1[50];
+    double niz2[50];
+    double presjek[50];
+    int vel1=0,vel2=0, rednibroj=1;
+
+	i=0;
+    printf("Unesite elemente %d.niza (-1 kraj): \n", rednibroj);
+    while(broj!=-1){
+        scanf("%lf", &broj);
+        niz1[i]=broj;
+        i++;
+
+    }
+    vel1=i-1;
+    broj=0;
+    i=0;
+    rednibroj++;
+    printf("Unesite elemente %d.niza (-1 kraj): \n", rednibroj);
+    while(broj!=-1){
+        scanf("%lf", &broj);
+        niz2[i]=broj;
+        i++;
+    }
+    vel2=i-1;
+    //printf("%d %d", vel1, vel2);
+
+    //formiranje presjeka
+    double temp;
+    int k,l=0,p;
+    int poklapanje;
+    int ponavljanje=0;
+    for(i=0;i<vel1;i++){
+        poklapanje=0;
+        temp=niz1[i];
+        for(j=0;j<vel2;j++){
+            if(niz2[j]==temp){
+                poklapanje++;
+            }
+        }
+        ponavljanje=0;
+        for(p=0;p<l;p++){
+            if(temp == presjek[p]){
+                ponavljanje++;
+            }
+        }
+        if(poklapanje>0 && ponavljanje==0){
+            presjek[l]=temp;
+            l++;
+        }
+    }
+    if(l==0){
+        printf("Presjek unesenih nizova je prazan skup!");
+    }
+    else{
+        printf("Presjek unesenih nizova je: ");
+        for(k=0;k<l;k++){
+            printf("%g",presjek[k]);
+            if(k<l-1){
+                printf(", ");
+            }
+        }
+    }
+    
+    
+	return 0;
+}
