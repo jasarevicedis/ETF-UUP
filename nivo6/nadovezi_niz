@@ -1,0 +1,20 @@
+#include <stdio.h>
+
+
+/* Ovdje napisite funkciju nadovezi */
+void nadovezi(int *p1, const int *q1, const int *q2){
+
+    for(;q1<q2;q1++){
+        *p1=*q1;
+        p1++;
+    }
+}
+
+int main() {
+    int niz1[10]={};
+    int niz2[4]={1,2,3,4};
+    nadovezi(niz1, niz2, niz2+4);
+    int i;
+    for(i=0; i<10; i++) printf("%d ",niz1[i]);
+    return 0;
+}
