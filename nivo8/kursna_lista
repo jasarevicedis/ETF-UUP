@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Kurs {
+    char valuta[5];
+    float vrijednost;
+};
+
+float razmjena(struct Kurs *niz, int vel, char *str, float value){
+    float rezultat=0;
+    struct Kurs *iza_kraja = niz+vel;
+    struct Kurs *pok = niz;
+    for(;pok<iza_kraja;pok++){
+        if(strcmp(pok->valuta, str)==0){
+            rezultat=(*pok).vrijednost * value;
+        }
+    }
+    return rezultat;
+}
+
+int main() {
+	printf("Lekcija 8: Strukture, Kursna lista");
+	return 0;
+}
