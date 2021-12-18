@@ -1,0 +1,57 @@
+#include <stdio.h>
+
+/* Ovdje pisete funkciju izbaci_max_vece */
+int izbaci_max_vece( double *niz, int broj){
+    double *pok= niz, *poc=niz;
+    double *kraj_pok=niz+broj;
+    double *pok2;
+    int i,j,k, brojac,max=0;
+    double max_num;
+    //pronalazak onog koji se najvise ponavlja
+    for(;pok<kraj_pok;pok++){
+        brojac=1;
+        pok2=pok+1;
+        for(;pok2<kraj_pok;pok2++){
+            if(*pok==*pok2){
+                brojac++;
+            }
+        }
+        if(brojac>max){
+            max_num = *pok;
+            max=brojac;
+        }
+        else if(brojac==max){
+            if(*pok<max_num){
+                max_num=*pok;
+            }
+        }
+    }
+    //edit niz
+    int oduzimanje=0;
+    double *temp2;
+    for(;poc<kraj_pok;poc++){
+        if(*poc>max_num){
+            temp2=poc;
+            for(;temp2<kraj_pok-1;temp2++){
+                *temp2=*(temp2+1);
+            }
+            poc--;
+            kraj_pok--;
+            oduzimanje++;
+        }
+    }
+    broj=broj-oduzimanje;
+    return broj;
+}
+
+int main() {
+    
+    double niz[] = {5.2, -10.1, 8.3, -140, 2.1, 5.2, -4, -21.1, -10.1};
+    int vel = izbaci_max_vece(niz, 9);
+    
+    int i;
+    for (i=0; i<vel; i++) 
+        printf("%g ", niz[i]);
+        
+    return 0;
+}
