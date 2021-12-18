@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <math.h>
+
+/* Ovdje napisite funkciju zaokruzi */
+void zaokruzi( double *niz, int vel){
+    double *poc=niz, *pok = niz;
+    double *iza_kraja= niz+vel;
+    for(;pok<iza_kraja;pok++){
+        *pok =round(*pok * 10)/10;
+    }
+}
+
+int main() {
+    double niz[] = { 1.23, 3.47, 0, 1.23666 };
+    zaokruzi(niz, 4);
+    int i;
+    for(i = 0; i < 4; i++) {
+      printf("%g ", niz[i]);
+    }
+    return 0;
+}
