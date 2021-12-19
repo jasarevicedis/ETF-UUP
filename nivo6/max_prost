@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+int je_li_prost(int n){
+    int i,x=0,bool;
+    for(i=2;i<n;i++){
+        if(n%i==0){
+            x++;
+        }
+    }
+    if(x==0){
+        bool=1;
+    }
+    else{
+        bool=0;
+    }
+    if(n<2){
+        bool=0;
+    }
+    return bool;
+}
+
+int maxprost(int* niz, int vel){
+    int max_prost=0;
+    int broj,test;
+    int *pok=niz;
+    int *iza_kraja = pok+vel;
+    for(;pok<iza_kraja;pok++){
+        if(*pok>=0){
+            broj=*pok;
+            test=je_li_prost(broj);
+            if(test==1){
+                if(broj>max_prost){
+                    max_prost=broj;
+                }
+            }
+        }
+    }
+    return max_prost;
+}
+
+int main() {
+	printf("Lekcija 6: Pokazivači, Max prost");
+	return 0;
+}
