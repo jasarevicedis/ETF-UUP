@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+
+struct Ugao {
+	int stepeni, minute, sekunde;
+};
+
+int izbaci(struct Ugao *uglovi,int vel,double x, double y){
+    double radian;
+    double decimal;
+    double pi = 3.141592653589;
+    struct Ugao *poc=uglovi;
+    struct Ugao *pok;
+
+    struct Ugao *iza_kraja=uglovi+vel;
+    for(;poc<iza_kraja;poc++){
+        decimal = (*poc).stepeni + ((*poc).minute*1.0)/60.0 + ((*poc).sekunde*1.0)/3600.0;
+        radian = decimal*(pi/180.0);
+        //printf("%lf)", radian);
+        if(radian>x && radian < y){
+            //izbacivanje
+            pok=poc;
+            for(;pok<iza_kraja-1;pok++){
+                *pok=*(pok+1);
+            }
+            vel--;
+            iza_kraja--;
+            poc--;
+        }
+    }
+    return vel;
+}
+int main(){
+    return 0;
+}
