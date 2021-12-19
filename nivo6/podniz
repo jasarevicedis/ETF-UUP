@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+int podniz (const int *p1, const int *p2, const int *q1, const int *q2){
+    const int *poc = p1;
+    const int *p;
+    const int *q;
+    int error=1;
+
+    while(p1!=p2){
+        if(*q1==*p1){
+            p=p1;
+            q=q1;
+            while(q!=q2){
+                if(*q!=*p){
+                    break;
+                }
+                q++;
+                p++;
+                if(q==q2){
+                    error=0;
+                }
+            }
+            
+        }
+        if(error==0){
+            if(p1==poc){
+                return 0;
+            }
+                return *(p1-1);
+                break;
+            }
+        p1++;
+    }
+    return -1;
+}
+
+int main() {
+	printf("Lekcija 6: Pokazivači, Podniz");
+	return 0;
+}
