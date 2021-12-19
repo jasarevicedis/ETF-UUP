@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Osoba {
+	char ime[15];
+	char prezime[20];
+	int telefon;
+};
+
+struct Osoba unos_osobe(){
+    struct Osoba d;
+    
+    printf("Unesite ime: ");
+    scanf("%s", &*d.ime);
+    printf("Unesite prezime: ");
+    scanf("%s", &*d.prezime);
+    printf("Unesite broj telefona: ");
+    scanf("%d", &d.telefon);
+    return d;
+}
+void ispis_osobe(struct Osoba  pok){
+    int i =1;
+    //printf("\n");
+    printf("%s ", (pok).ime);
+    printf("%s, ", (pok).prezime);
+    printf("Tel: %d ", (pok).telefon);  
+    printf("\n");
+    i++;
+}
+
+
+int main() {
+    struct Osoba imenik[100];
+    struct Osoba *unesen = imenik;
+    struct Osoba *ispisan = imenik;
+
+	int odabir=1;
+    int i,j;
+    while(odabir!=0){
+        printf("Pritisnite 1 za unos, 2 za ispis, 0 za izlaz: ");
+        scanf("%d", &odabir);
+        if(odabir==1){
+            *unesen= unos_osobe();
+            unesen++;
+        }
+        if(odabir==2){
+            printf("\n");
+            ispisan=imenik;
+            i=1;
+            for(;ispisan<unesen;ispisan++){
+                
+                printf("%d. ", i);
+                ispis_osobe(*ispisan);
+                i++;
+            }
+        }
+    }
+	return 0;
+}
