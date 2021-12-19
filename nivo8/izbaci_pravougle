@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <math.h>
+
+struct Tacka {
+    int x,y;
+};
+struct Trougao {
+    struct Tacka A,B,C;
+};
+
+int  izbaci_pravougle(struct Trougao *trouglovi, int vel){
+    double eps=0.001; //radi preciznosti
+    int bool=0;
+    struct Trougao *pok = trouglovi;
+    struct Trougao *iza_kraja = trouglovi + vel;
+    struct Trougao *temp;
+    double a,b,c;
+    for(;pok<iza_kraja;pok++){
+        //KVADRIRANE STRANICE
+        a=pow(((*pok).B.x-(*pok).C.x),2)+pow(((*pok).B.y-(*pok).C.y),2);
+
+        b=pow(((*pok).C.x-(*pok).A.x),2)+pow(((*pok).C.y-(*pok).A.y),2);
+
+        c=pow(((*pok).B.x-(*pok).A.x),2)+pow(((*pok).B.y-(*pok).A.y),2);
+        //printf("(%lf %lf %lf)", a,b,c);
+        if((fabs(a+b-c)<eps)||(fabs(a+c-b)<eps)||(fabs(b+c-a)<eps)){
+            //radi se o pravouglom;
+            //izbacivanje iz niza
+            
+            temp=pok;
+            for(;pok<iza_kraja-1;pok++){
+                *pok=*(pok+1);
+            }
+            iza_kraja--;
+            vel--;
+            pok=temp;
+            pok--;
+            
+        }
+    }
+    return vel;
+}
+int main() {
+	printf("Lekcija 8: Strukture, Izbaci pravougle");
+	return 0;
+}
