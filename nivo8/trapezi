@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <math.h>
+
+//strukture---------------------------
+struct Tacka {
+    double x,y;
+};
+struct Trapez {
+    struct Tacka A,B,C,D;
+};
+//FUNKCIJE----------------------------
+
+double racunaj_dist(struct Tacka t1, struct Tacka t2){
+    double dist;
+    dist=sqrt(pow((t1.x-t2.x),2)+pow((t1.y-t2.y),2));
+    return dist;
+}
+double racunaj_visinu(double a, double b){
+    double h;
+    h=(2*a)/b;
+    return h;
+}
+double p_trougla(double a, double b, double c){
+    double p;
+    double s= (a+b+c)/2.0;
+    p=sqrt((s)*(s-a)*(s-b)*(s-c));
+    return p;
+}
+double racunaj_obim(struct Trapez t){
+    double obim;
+    double str1,str2,str3,str4;
+    str1=racunaj_dist(t.A, t.B);
+    str2=racunaj_dist(t.B, t.C);
+    str3=racunaj_dist(t.C, t.D);
+    str4=racunaj_dist(t.D, t.A);
+
+    obim=str1+str2+str3+str4;
+    return obim;
+}
+double racunaj_p(struct Trapez t){
+    
+    double p,h,m,a,c,x;
+    double s,d,pt;
+    c=racunaj_dist(t.D,t.C);
+    d=racunaj_dist(t.D,t.B);
+    a=racunaj_dist(t.A,t.B);
+    m=(c+a)/2.0;
+    x=racunaj_dist(t.D, t.A);
+    s=(a-c)/2.0;
+    pt=p_trougla(d,a ,x );
+    h=racunaj_visinu(pt,a);
+    p=m*h;
+    //printf("(%lf)(%lf)(%lf)(%lf)/", x, s,a,c);
+    
+    
+    return p;
+};
+
+void trapezi(struct Trapez *niz,int n,double *niz_obima, double *niz_p){
+    struct Trapez *poc=niz;
+    struct Trapez *iza_kraja=niz+n;
+    double *obim=niz_obima;
+    double *p=niz_p;
+    for(;poc<iza_kraja;poc++){
+        
+        *obim=racunaj_obim(*poc);
+        *p=racunaj_p(*poc);
+        obim++;
+        p++;
+    }
+
+}
+
+int main() {
+	printf("Lekcija 8: Strukture, Trapezi");
+	return 0;
+}
