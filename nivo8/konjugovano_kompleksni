@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+typedef struct {
+	int im, re;
+} Kompleksni;
+
+int konjugovano_kompleksni (Kompleksni *p1, Kompleksni *p2,   Kompleksni *rez){
+    int brojac=0, error;
+    Kompleksni *poc=rez;
+    Kompleksni *temp=rez;
+
+    Kompleksni *pok=NULL;
+
+    for(;p1<p2;p1++){
+        *rez=*p1;
+        (*rez).im*=-1;
+        pok=poc;
+        for(;pok<temp;pok++){
+            error=0;
+            //provjeravamo da li se struktura vec nalazi u nizu
+            if((*pok).im==(*rez).im){
+                error++;
+            }
+            if((*pok).re==(*rez).re){
+                error++;
+            }
+
+            if(error==2){
+                //kickujemo strukturu iz niza
+                rez--;
+                temp--;
+                brojac--;
+            }
+
+        }
+        brojac++;
+        rez++;
+        temp++;
+    }
+    return brojac;
+}
+
+int main() {
+	printf("Lekcija 8: Strukture, Konjugovano kompleksni");
+	return 0;
+}
