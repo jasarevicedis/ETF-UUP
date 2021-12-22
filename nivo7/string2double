@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+int string2double(const char* string, double *broj){
+    double suma=0;
+    const char *poc= string;
+    int tacke=0;
+    const char *iza_kraja = string;
+    //iza kraja
+    while(*iza_kraja!='\0'){
+        iza_kraja++;
+    }
+    const char *tacka=iza_kraja;
+    for(;poc<iza_kraja;poc++){
+        if(*poc==46){
+            tacka=poc;
+            tacke++;
+        }
+        /*
+        if(*poc==46 && poc==string){
+            return 0;
+        }
+        */
+        if((*poc<48 || *poc>57)&& *poc!=46){
+            return 0;
+        }
+    }
+    if(tacke>1){
+        return 0;
+    }
+    //string to double
+    poc=string;
+    for(;poc<tacka;poc++){
+        suma+=*poc-48;
+        //printf("(%lf)", suma);
+        if(poc!=tacka-1){
+            suma*=10;
+        }
+    }
+    tacka++;
+    int kolicnik=10;
+    for(;tacka<iza_kraja;tacka++){
+        suma+=(*tacka-48)/(kolicnik*1.0);
+        //printf("(%lf)", suma);
+
+        kolicnik*=10;
+    }
+    *broj=suma;
+    return 1;
+}
+
+int main() {
+	printf("Lekcija 7: Stringovi, String 2 Double");
+	return 0;
+}
