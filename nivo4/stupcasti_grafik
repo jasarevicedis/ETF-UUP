@@ -1,0 +1,112 @@
+#include <stdio.h>
+
+int main() {
+	//cijeli grafik cemo posmatrati(maksimalan broj clanova) kao matricu dimenzija 58 i 21
+    char mat[21][60];int i,j,l;//60 radi praznih mjesta
+   
+    
+    int niz[20];
+    i=0;
+
+    //unos
+    printf("Unesite clanove niza:");
+    do {
+        scanf("%d", &niz[i]);
+        if((niz[i]>10 || niz[i]<-10) && niz[i]!=999){
+            printf("Broj nije u trazenom intervalu");
+            return 0;
+        }
+        i++;
+    }while (niz[i-1]!=999 && i!=21);
+    int broj_clanova=i-1;
+    printf("\n");
+    //racunanje sirine
+    //broj clanova niza nam odredjuje sirinu
+    int sirina=3*(i-1);
+    
+    //racunanje visine
+    //visina je odredjena najvecim i najmanjim clanom niza
+    int visina;
+    int y_plus;
+    int y_minus;
+    //pronalazak apsolutno najveceg, bez obzira na predznak
+    
+    int najveci=0,najmanji=0,temp;
+    if(broj_clanova==20){
+        for(j=0;j<i;j++){
+        temp=niz[j];
+        if(temp<0){
+            if(temp<najmanji){
+                najmanji=temp;
+            }
+        }
+        else if(temp>0){
+            if(temp>najveci){
+                najveci=temp;
+            }
+        }
+    }
+    }
+    else {
+    for(j=0;j<i-1;j++){
+        temp=niz[j];
+        if(temp<0){
+            if(temp<najmanji){
+                najmanji=temp;
+            }
+        }
+        else if(temp>0){
+            if(temp>najveci){
+                najveci=temp;
+            }
+        }
+    }
+    }
+    if(najveci>0|| najmanji<0){
+        visina=najveci+ (-1)*najmanji+1;
+    }
+    else {
+        visina=0;
+    }
+    y_plus=najveci;
+    y_minus= najmanji*(-1);
+    //printf("(%d)(%d)(%d)", visina, y_plus, y_minus);
+    //printf("\n");
+
+    //kreiranje trazenog grafika
+    for(i=0;i<visina;i++){
+        for(j=0;j<60;j++){
+            if(i==y_plus && j%3!=0 && j<sirina){
+                mat[i][j]='-';
+            }
+            else if(i==y_plus && j%3==0 && niz[j/3]!=0){
+                mat[i][j]='-';
+            }
+            else if(i==y_plus && j%3==0 && niz[j/3]==0){
+                mat[i][j]='*';
+            }
+            else if(j%3==0 && i==y_plus-niz[j/3]){
+                mat[i][j]='*';
+            }
+            
+            else if(j%3==0 && i>y_plus-niz[j/3] && i<y_plus){
+                mat[i][j]='|';
+            }
+            
+            else if(j%3==0 && i<y_plus-niz[j/3] && i>y_plus){
+                mat[i][j]='|';
+            }
+            else {
+                mat[i][j]=' ';
+            }
+        }
+    }
+    //printanje trazenog grafika
+    for(i=0;i<visina;i++){
+        for(j=0;j<sirina;j++){
+            printf("%c", mat[i][j]);
+        }
+        printf("\n");
+    }
+	return 0;
+}
