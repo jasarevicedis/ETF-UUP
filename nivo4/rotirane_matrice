@@ -1,0 +1,61 @@
+#include <stdio.h>
+
+int main() {
+    int a_x,a_y, b_x, b_y,i,j;
+    int a[10][10];
+    int a_transponovana[10][10];
+    int a_rotated[10][10];
+    int b[10][10];
+
+	printf("Unesite sirinu i visinu matrice A: ");
+    scanf("%d %d", &a_x, &a_y);
+    printf("Unesite clanove matrice A: ");
+    for(i=0;i<a_y;i++){
+        for(j=0;j<a_x;j++){
+            scanf("%d", &a[i][j]);
+        }
+    }
+
+    printf("Unesite sirinu i visinu matrice B: ");
+    scanf("%d %d", &b_x, &b_y);
+    printf("Unesite clanove matrice B: ");
+    for(i=0;i<b_y;i++){
+        for(j=0;j<b_x;j++){
+            scanf("%d", &b[i][j]);
+        }
+    }
+    //kreiranje transponovane matrice a
+    for(i=0;i<a_x;i++){
+        for(j=0;j<a_y;j++){
+            a_transponovana[i][j]=a[j][i];
+            //printf("/%d/", a_transponovana[i][j]);
+        }
+    }
+    //pretvaranje transponovane u rotiranu
+    for(i=0;i<a_x;i++){
+        for(j=0;j<a_y;j++){
+            a_rotated[i][j]=a_transponovana[i][a_y-j-1];
+        }
+    }
+    int brojac=0;
+    if(a_x!=b_y || a_y!=b_x){
+        printf("NE\n");//ako dimenzije nisu odgovarajuce
+    }
+    else {
+        for(i=0;i<a_x;i++){
+            for(j=0;j<a_y;j++){
+                if(a_rotated[i][j]==b[i][j]){
+                    //printf("(%d)", a_rotated[i][j]);
+                    brojac++;
+                }
+            }
+        }
+        if(brojac==a_x*a_y){
+            printf("DA\n");
+        }
+        else{
+            printf("NE\n");
+        }
+    }
+	return 0;
+}
