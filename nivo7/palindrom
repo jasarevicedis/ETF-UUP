@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+
+
+
+int je_li_palindrom(const char* str){
+    int bool=0;
+    const char *poc=str;
+    const char *temp=str;
+    const char *kraj=NULL;
+    //treba nam pokazivac na zadnji karakter
+    while(*temp!='\0'){
+        temp++;
+    }
+    temp--;
+    kraj=temp;
+    //petljom idemo s obe strane stringa
+    if(kraj==poc){
+        return 1;
+    }
+    while(poc<kraj){
+        if(!((*poc>=48 && *poc<=57)||(*poc>=65 && *poc<=90)||(*poc>=97 && *poc<=122))){
+            while(!((*poc>=48 && *poc<=57)||(*poc>=65 && *poc<=90)||(*poc>=97 && *poc<=122))){
+                poc++;
+            }
+        }
+        if(!((*kraj>=48 && *kraj<=57)||(*kraj>=65 && *kraj<=90)||(*kraj>=97 && *kraj<=122))){
+            while(!((*kraj>=48 && *kraj<=57)||(*kraj>=65 && *kraj<=90)||(*kraj>=97 && *kraj<=122))){
+                kraj--;
+            }
+        }
+        if(*poc!=*kraj &&  *poc+32!=*kraj && *poc-32!=*kraj ){
+            return 0;
+        }
+        if(*poc-32==*kraj && (*kraj>=48 && *kraj<=57)){
+            return 0;
+        }
+        //printf("%c//%c,", *poc,*kraj);
+        if(poc==kraj){
+            return 1;
+        }
+        poc++;
+        
+        kraj--;
+        if(poc+1==kraj && *poc==*kraj){
+            return 1;
+        }
+        if(poc==kraj){
+            return 1;
+        }
+    }
+    return 0;
+}
+int main() {
+	printf("Lekcija 7: Stringovi, Palindrom");
+	return 0;
+}
