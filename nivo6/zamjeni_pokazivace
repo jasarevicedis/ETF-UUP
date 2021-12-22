@@ -1,15 +1,24 @@
 #include <stdio.h>
 
+void zamijeni_pokazivace(int **pok1,int **pok2){
+    int *temp=*pok1;
+    *pok1=*pok2;
+    *pok2=temp;
+
+}
+
+int main() {
+
+	return 0;
+}
+
+
+/*
 void zamijeni_pokazivace(double *pok1,double *pok2){//int,4.test pada
     double privremeno = *pok1;
     *pok1=*pok2;
     *pok2=privremeno;
 }
+*/
 
-int main() {
-	int a,b;
-    int *pok1=&a;
-    int *pok2=&b;
 
-	return 0;
-}
