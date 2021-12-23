@@ -1,0 +1,84 @@
+#include <stdio.h>
+
+void sortiraj_niz(double *niz, int vel){
+    double *poc=niz;
+    double *iza_kraja=niz+vel;
+    double *poc2=NULL;
+    double temp;
+    for(;poc<iza_kraja-1;poc++){
+        poc2=poc+1;
+        for(;poc2<iza_kraja;poc2++){
+            if(*poc>*poc2){
+                temp=*poc;
+                *poc=*poc2;
+                *poc2=temp;
+            }
+        }
+    }
+}
+
+int matrice_permutacija(double A[100][100], double B[100][100], double C[100][100], int M, int N){
+    //clanove matrice cemo pretvorit u niz, pa ga sortirat,pa prvojerit da li su sva tri niza ista
+    int i,j,l;
+    double nizA[10000],nizB[10000], nizC[10000];
+    int vel=M*N;//velicina niza
+    l=0;
+    for(i=0;i<M;i++){
+        for(j=0;j<N;j++){
+            nizA[l]=A[i][j];
+            l++;
+        }
+    }
+    l=0;
+    for(i=0;i<M;i++){
+        for(j=0;j<N;j++){
+            nizB[l]=B[i][j];
+            l++;
+        }
+    }
+    l=0;
+    for(i=0;i<M;i++){
+        for(j=0;j<N;j++){
+            nizC[l]=C[i][j];
+            l++;
+        }
+    }
+    sortiraj_niz(nizA, vel);
+    sortiraj_niz(nizB, vel);
+    sortiraj_niz(nizC, vel);
+    int brojac=0;
+    for(i=0;i<vel;i++){
+        if(nizA[i]==nizB[i] && nizB[i]==nizC[i]){
+            brojac++;
+        }
+    }
+    if(brojac==vel){
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+int main() {
+    double A[100][100], B[100][100], C[100][100];
+    int M, N;
+    int i,j;
+    for(i=0;i<M;i++){
+        for(j=0;j<N;j++){
+            scanf("%lf",&A[i][j]);
+        }
+    }
+    for(i=0;i<M;i++){
+        for(j=0;j<N;j++){
+            scanf("%lf",&B[i][j]);
+        }
+    }
+    for(i=0;i<M;i++){
+        for(j=0;j<N;j++){
+            scanf("%lf",&C[i][j]);
+        }
+    }
+	printf("%d\n", matrice_permutacija(A, B, C, M, N) );
+	return 0;
+}
