@@ -1,0 +1,89 @@
+#include <stdio.h>
+
+double aritmeticka(int* niz, int vel, int* max_cifra, int* min_cifra){
+    int suma,i;
+    double sredina;
+    int *poc=niz;
+    int *iza_kraja=niz+vel;
+
+    //aritmeticka sredina
+    suma=0;
+    for(;poc<iza_kraja;poc++){
+        suma+=*poc;
+    }
+    sredina=(1.0*suma)/vel;
+
+    //rad s 
+    int broj,brojac_vecih=0;
+    int max[10]={0};//histogrami
+    poc=niz;
+    for(;poc<iza_kraja;poc++){
+        if(*poc>sredina){
+            brojac_vecih++;
+            broj=*poc;
+            if(broj<0){
+                broj*=-1;
+            }
+            if(broj==0){
+                max[0]++;
+            }
+            else{
+                while(broj!=0){
+                max[broj%10]++;
+                broj/=10;
+            }
+            }
+        }
+        
+    }
+    if(brojac_vecih==0){
+        *max_cifra=-1;
+        *min_cifra=-1;
+    }
+    else {
+        //sada provjeravamo i histograme da bi nasli trazene cifre
+        //ovo mozemo i pokazivackom aritmetikom, ali mislim da nam je lakse ovako bez deklarisanja novih pokazivaca
+        int max_pon=-1;
+        *max_cifra=-100;
+        for(i=0;i<10;i++){
+            //printf("{%d}", max[i]);
+            if((max[i]>max_pon) || (max[i]==max_pon && i>*max_cifra)){
+                max_pon=max[i];
+                *max_cifra=i;
+                //printf("(%d %d %d)", max_pon, *max_cifra, i);
+            }
+        }
+        int min_pon=100;
+        *min_cifra=0;
+        for(i=0;i<10;i++){
+            if((max[i]<min_pon && max[i]>=1) || (max[i]==min_pon && i<*min_cifra)){
+                min_pon=max[i];
+                *min_cifra=i;
+            }
+        }
+    }
+    return sredina;
+}
+
+int main() {
+    int i=0;
+    int niz[100];
+    niz[0]=1;
+    
+	printf("Unesite clanove niza (0 za kraj): ");
+    while(1){
+        scanf("%d", &niz[i]);
+        if(niz[i]==0){
+            break;
+        }
+        i++;
+    }
+    i--;
+    int *max_cifra=niz+3;
+    int *min_cifra=niz+4;
+    int sredina= aritmeticka(niz, i, max_cifra, min_cifra);
+    //ova varijabla nam nema svrhe u main funkciji, ali je moramo dodijeliti necemu da bi izvrsili postupak na pokazivacima
+    printf("Najvise puta se ponavlja cifra %d a najmanje cifra %d.", *max_cifra, *min_cifra);
+
+	return 0;
+}
