@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <math.h>
+
+int slucajni(int n){
+    int i, slucajni;
+    double x=n*1.0;
+    
+    for(i=0;i<8;i++){
+        x/=10.0;
+    }
+    //printf("(%.8lf)", x);
+    x=sqrt(x);
+    double temp = x*10000;
+    int temp2=(int)temp;
+    double temp3=(double)temp2/10000;
+    double temp4= x-temp3;
+    temp4*=pow(10,12);
+    slucajni =(int)temp4;
+    return slucajni;
+}
+
+int main() {
+	printf("Lekcija 5: Funkcije, Sredina korijena");
+	return 0;
+}
