@@ -1,0 +1,70 @@
+#include <stdio.h>
+
+char* izbaci_max_slovo(char* s){
+    int histogram[26]={0};//26 SLOVA U ALFABETU
+    
+    char *poc=s;
+    char *pok=s;
+    char *iza_kraja=s;
+    int index;
+    while(*iza_kraja!='\0'){
+        iza_kraja++;
+    }
+    for(;pok<iza_kraja;pok++){
+        if((*pok>='a' && *pok<='z') || (*pok>='A' && *pok<='Z')){
+            if(*pok>='a' && *pok<='z'){
+                index=*pok;
+                index-=97;
+                //printf("%d ",index);
+                histogram[index]++;
+            }
+            else if(*pok>='A' && *pok<='Z'){
+                index=*pok;
+                index-=65;
+               histogram[index]++;
+            }
+        }
+    }
+    int i,max_pon=0,max_ele;
+    //prodjemo kroz histogram i nadjemo najbrojniji
+    for(i=0;i<26;i++){
+        if(histogram[i]>max_pon){
+            max_pon=histogram[i];
+            max_ele=i;
+        }
+    }
+    char max_malo;
+    char max_veliko;
+    if(max_pon==0){
+        max_malo='\0';
+        max_veliko='\0';
+    }
+    else {
+        max_malo=max_ele+97;
+        max_veliko =max_ele+65;
+    }
+    //printf("%c %c//", max_veliko, max_malo);
+    pok=s;
+    char *temp=s;
+    for(;pok<iza_kraja-1;pok++){
+        if(*pok==max_malo || *pok==max_veliko){
+            temp=pok;
+            for(;temp<iza_kraja-1;temp++){
+                *temp=*(temp+1);
+            }
+            iza_kraja--;
+            *iza_kraja='\0';
+            pok--;
+        }
+    }
+    if(*(iza_kraja-1)==max_veliko || *(iza_kraja-1)==max_malo){
+        iza_kraja--;
+        *iza_kraja='\0';
+    }
+    return poc;
+}
+
+int main() {
+	
+	return 0;
+}
