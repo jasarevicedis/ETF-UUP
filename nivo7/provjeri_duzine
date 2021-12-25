@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+int provjeri_duzine( char *str, int *niz, int vel){
+    //veci dio funkcije kopiran iz mog zadatka 'pocetna_slova_rijeci'
+    
+     char *pok1 = str;
+    char *iza_kraja = str;
+    while(*iza_kraja!='\0'){
+        iza_kraja++;
+    }
+    
+    char *temp=str;
+    int brojac,brojac2=0;
+    for(;pok1<iza_kraja;pok1++){
+        if((*pok1>='A' && *pok1<='Z')||(*pok1>='a' && *pok1<='z') && !((*(pok1-1)>='A' && *(pok1-1)<='Z')||(*(pok1-1)>='a' && *(pok1-1)<='z'))){
+            
+            brojac=0;
+            temp=pok1;
+            while(((*temp>='a' && *temp<='z')||(*temp>='A' && *temp<='Z'))){
+                temp++;
+                brojac++;
+            }
+            //printf("(%d)", brojac);
+            if(brojac!=*niz){
+                return 0;
+            }
+            niz++;
+            brojac2++;
+            
+        }
+        
+
+    }
+    if(brojac2!=vel){
+        return 0;
+    }
+    return 1;
+}
+
+int main() {
+	printf("Lekcija 7: Stringovi, Provjeri dužine");
+	return 0;
+}
