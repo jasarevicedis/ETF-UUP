@@ -1,0 +1,109 @@
+#include <stdio.h>
+
+int unos_pogodaka(int n, int *sum){
+    int i;
+    char polje;
+    int pogodak,koeficijent;
+    int suma=0;
+    int error=0,broj_bacanja=0;
+    if(n==1){
+        //1 za sabita
+        printf("Unesite pogotke za Sabita: ");
+    }
+    if(n==2){
+        //za fadilu
+        printf("Unesite pogotke za Fadilu: ");
+    }
+    do {
+        scanf(" %c", &polje);
+        
+        if(!(polje=='I' || polje=='O' || polje=='X' || polje=='S' || polje=='D' || polje=='T' || polje=='.')){
+            error++;
+        }
+        if(polje!='.'){
+            broj_bacanja++;
+        }
+        if(polje=='I'){
+            suma+=50;
+        }
+        if(polje=='O'){
+            suma+=25;
+        }
+        if(polje=='T'|| polje=='D'|| polje=='S'){
+            if((scanf("%d", &pogodak))==0){
+                error++;
+            };
+            if(polje=='T'){
+                koeficijent=3;
+            }
+            if(polje=='D'){
+                koeficijent=2;
+            }
+            if(polje=='S'){
+                koeficijent=1;
+            }
+            suma+=koeficijent*pogodak;
+        }
+    }while (polje!='.' );
+    if(broj_bacanja!=9){
+        error++;
+    }
+    *sum=suma;
+    return error;
+}
+
+int main(){
+    int sabit;
+    int fadila;
+    int suma_sabit,suma_fadila;
+    int *pok1=&suma_sabit;
+    int *pok2=&suma_fadila;
+
+    do {
+        sabit=unos_pogodaka(1, pok1);
+        //printf("%d/", sabit);
+        if(sabit!=0){
+            printf("Neispravni ulazni podaci.\n");
+        }
+    }while (sabit!=0);
+    do {
+        fadila=unos_pogodaka(2,pok2);
+        //printf("%d ", fadila);
+
+        if(fadila!=0){
+            printf("Neispravni ulazni podaci.\n");
+        }
+    }while (fadila!=0);
+    //printf("(%d %d)", suma_sabit, suma_fadila);
+
+    //ispis poslije unosa
+    if(suma_sabit>301 && suma_fadila>301){
+        printf("Oba igraca su premasila potrebni broj poena, rezultat je nerijesen. ");
+    }
+    else if(suma_sabit>301 && suma_fadila<=301){
+        printf("Sabit je premasio potrebni broj poena, ");
+        printf("Fadila je ostvarila %d poena. ",suma_fadila);
+        printf("Pobjednik je Fadila, kojoj je ostalo jos %d poena do pobjede.",301-suma_fadila);
+    }
+    else if(suma_sabit<=301 && suma_fadila>301){
+        printf("Sabit je ostvario %d poena, ", suma_sabit);
+        printf("Fadila je premasila potrebni broj poena. ");
+        printf("Pobjednik je Sabit, kojem je ostalo jos %d poena do pobjede.",301-suma_sabit);
+
+
+    }
+    else if(suma_sabit<=301 && suma_fadila<=301){
+        printf("Sabit je ostvario %d poena, ", suma_sabit);
+        printf("Fadila je ostvarila %d poena. ",suma_fadila);
+        if(suma_fadila==suma_sabit){
+            printf("Rezultat je nerijesen.");
+        }
+        if(suma_fadila>suma_sabit){
+            printf("Pobjednik je Fadila, kojoj je ostalo jos %d poena do pobjede.",301-suma_fadila);
+        }
+        if(suma_fadila<suma_sabit){
+            printf("Pobjednik je Sabit, kojem je ostalo jos %d poena do pobjede.",301-suma_sabit);
+        }
+    }
+    return 0;
+}
