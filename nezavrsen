@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <math.h>
+
+//funkcija za farajev niz
+int farajev_niz(double *niz, int n){
+    int i,j,k,l,broj=0;
+    int bool=1;
+    //prvi clan je uvijek 0
+    *niz=0;
+    niz++;
+    for(i=1;i<n;i++){
+        for(j=i+1;j<n;j++){
+            for(k=2;k<=sqrt(i);k++){
+                if(i%k==0 && j%k==0){
+                    bool=0;
+                    break;
+                }
+                bool=1;
+            }
+            //-------
+            for(l=0;l<broj;l++){
+                if(niz[l]==(double)i/j){
+                    bool=0;
+                }
+            }
+            if(bool){
+                 niz[broj]=(double)i/j;
+                broj++;
+                if(broj==99){
+                    j=n+1;
+                    i=n+1;
+                }
+            }
+        } 
+        }
+        niz[broj]=1;
+        broj++;
+        int min;
+        double temp;
+        
+        for(i=0;i<broj;i++){
+            min=i;
+            for(j=i+1;j<broj;j++){
+                if(niz[j]<niz[min]){
+                    min=j;
+                }
+            }
+            temp=niz[i];
+            niz[i]=niz[min];
+            niz[min]=temp;
+        }
+    
+    return broj;
+}
+
+int main(){
+    int n,i;
+    double niz[100];
+    printf("Unesite broj n: ");
+    scanf("%d", &n);
+    printf("\n");
+    int vel=farajev_niz(niz, n);
+    for(i=0;i<vel;i++){
+        printf("%.3lf ", niz[i]);
+    }
+    return 0;
+}
