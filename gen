@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Student {
+    char ime[20], prezime[20];
+    int ocjene[50];
+    int br_ocjena;
+};
+//za racunanje prosjeka
+double racunaj_prosjek(struct Student student){
+    double prosjek=0,min_prosjek=5.0;
+    int *ocjena = student.ocjene;
+    int *iza_ocjena = student.ocjene+student.br_ocjena;
+    if(student.br_ocjena==0){
+        return min_prosjek;
+    }
+    for(;ocjena<iza_ocjena;ocjena++){
+        if(*ocjena==5){
+            return min_prosjek;
+        }
+        prosjek+=*ocjena;
+    }
+    prosjek/=student.br_ocjena;
+    return prosjek;
+}
+
+
+//glavna funkcija
+int genijalci( struct Student *studenti, int vel, double prosjek){
+    struct Student n1,n2,n3;
+    double prosjek1,prosjek2,prosjek3;
+    struct Student *pok=studenti;
+    struct Student *temp=NULL;
+    struct Student *iza_kraja=studenti+vel;
+    double trenutni_prosjek;
+
+    for(;pok<iza_kraja;pok++){
+        trenutni_prosjek=racunaj_prosjek(*pok);
+        if(trenutni_prosjek<prosjek){
+            //izbacujemo iz niza
+            temp=pok;
+            for(;temp<iza_kraja-1;temp++){
+                *temp=*(temp+1);
+            }
+            vel--;
+            pok--;
+            iza_kraja--;
+        }
+    }
+    //ako smo sve izbacili
+    if(vel==0){
+        return 0;
+    }
+    pok=studenti;
+    iza_kraja=studenti+vel;
+    prosjek1=0;
+    for(;pok<iza_kraja;pok++){
+
+    }
+
+    
+
+
+    return vel;
+}
+
+int main() {
+	printf("Lekcija 8: Strukture, Genijalci");
+	return 0;
+}
