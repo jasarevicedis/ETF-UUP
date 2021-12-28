@@ -1,0 +1,73 @@
+#include <stdio.h>
+
+
+/* === OVDJE UBACITI KOD === */
+#include <math.h>
+
+//vec napravljena funkcija u zadatku zaokruzi
+//koristi se math biblioteka, jer nije zabranjena, niti kod nije promjenjen
+void zaokruzi1(double *niz, int vel){
+    double *poc=niz, *pok = niz;
+    double *iza_kraja= niz+vel;
+    for(;pok<iza_kraja;pok++){
+        *pok =round(*pok * 10)/10;
+    }
+}
+int suma_cifara(double n){
+    int suma=0;
+    if(n<0){
+        n*=-1;
+    }
+    int x=(int)(n*10);
+    //printf("x:%d)", x);
+    while(x>0){
+        suma+=x%10;
+        x/=10;
+    }
+    return suma;
+}
+void preslozi(double *niz,int vel ,int k){
+    zaokruzi1(niz,vel);
+    int suma;
+    double value;
+    double *temp=NULL;
+    double *pok=niz;
+    double *iza_kraja=niz+vel;
+    int brojac=0;
+    for(;pok<iza_kraja;pok++){
+        suma=suma_cifara(*pok);
+        //printf("%d/", suma);
+        if(suma>=k){
+            temp=pok;
+            value=*pok;
+            for(;temp>niz+brojac;temp--){
+                *temp=*(temp-1);
+            }
+            *(niz+brojac)=value;
+            brojac++;
+            
+        }
+        
+    }
+    
+};
+
+int main() {
+    int i, vel, k;
+    double niz[100];
+    
+    printf("Unesite broj elemenata niza: ");
+    scanf("%d", &vel);
+    printf("Unesite clanove niza: ");
+    for (i=0; i<vel; i++)
+        scanf("%lf", &niz[i]);
+    printf("Unesite broj k: ");
+    scanf("%d", &k);
+  
+    preslozi(niz, vel, k);
+  
+    printf("Nakon poziva funkcije preslozi niz glasi:\n");
+    for (i=0; i<vel; i++)
+        printf("%g ", niz[i]);
+	return 0;
+}
