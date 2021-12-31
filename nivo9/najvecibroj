@@ -1,1 +1,73 @@
+#include <stdio.h>
+
+int main() {
+	FILE *zadatak = fopen("zadatak.txt", "r");
+    if(zadatak==NULL){
+        fclose(zadatak);
+        return 1;
+    }
+	FILE *rjesenje = fopen("rjesenje.txt", "w");
+    if(rjesenje==NULL){
+        fclose(rjesenje);
+        return 2;
+    }
+    char *pok,*pok2;
+    int c,p,suma=0,max_suma=-1000,predznak=1,brojac=0;
+    do {
+        c=fgetc(zadatak);
+        if(c=='-'){
+            predznak=-1;
+            //fprintf(rjesenje, "%c/", p);
+        }
+        if(c==' '){
+            predznak=1;
+        }
+        brojac=0;
+        //suma=0;
+        while(c>='0' && c<='9'){
+            /*
+            if(brojac==0){
+                fseek(zadatak, -1, SEEK_CUR);
+                p=fgetc(zadatak);
+                if(p=='-'){
+                predznak=-1;
+                }
+                //fseek(zadatak, 1, SEEK_CUR);
+            }
+            */
+            
+            //brojac++;
+            
+            
+            suma*=10;
+            suma+=c-48;
+            //fprintf(rjesenje, "(%d)", suma);
+            //fputc(c,rjesenje);
+            c=fgetc(zadatak);
+            if(!(c>='0' && c<='9')){
+                suma*=predznak;
+                if(suma>max_suma){
+                    max_suma=suma;
+                }
+                
+            }
+            
+        }
+        suma=0;
+        
+        
+    }while (!feof(zadatak));
+    if(max_suma==-1000){
+        max_suma=0;
+    }
+    fprintf(rjesenje, "%d", max_suma);
+
+    //printf("//%d", max_suma);
+    //fputc(max_suma,rjesenje);
+    fclose(zadatak);
+    fclose(rjesenje);
+
+       
+	return 0;
+}
 
