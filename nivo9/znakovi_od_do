@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+int main() {
+	char x,y;
+    printf("Unesite znakove x i y: ");
+    scanf("%c %c", &x, &y);
+    
+    if(y<x){
+        printf("Pogresan unos");
+        return 0;
+    }
+
+    else {
+        char c;
+        FILE *input = fopen("input.txt", "r");
+        FILE *output = fopen("output.txt", "w");
+        if(output==NULL){
+            printf("Izlazna datoteka prazna!");
+            return 0;
+        }
+        if(input==NULL){
+            printf("Ulazna datoteka prazna!");
+            return 0;
+        }
+        while((c=fgetc(input))!=EOF){
+            if(c>=x && c<=y){
+                fputc(c,output);
+            }
+        }
+        fclose(input);
+        fclose(output);
+    }
+    
+	return 0;
+}
