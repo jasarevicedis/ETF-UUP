@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+/* Ovdje pisete funkcije unesi_niz i srednja_vrijednost */
+
+void unesi_niz(){
+    FILE *ispis=fopen("niz.bin", "w");
+    if(ispis==NULL){
+        printf("greska");
+        //return 0;
+    }
+    int c;
+    int brojac=0;
+    do {
+        scanf("%d", &c);
+        if(c!=-1){
+            putw(c, ispis);
+        }
+        
+        brojac++;
+    }while (c!=-1 && brojac<100);
+    fclose(ispis);
+}
+
+double srednja_vrijednost(){
+    double average=0;
+    double broj;
+    int brojac=0;
+    double suma=0;
+    FILE *brojevi=fopen("niz.bin", "r");
+    if(brojevi==NULL){
+        printf("greska");
+    }
+    while((broj=getw(brojevi))!=EOF){
+        suma+=broj;
+        brojac++;
+    }
+    if(suma!=0){
+        average = suma/brojac;
+    }
+    return average;
+}
+int main() {
+    unesi_niz();
+    printf("%g\n", srednja_vrijednost());
+    return 0;
+}
