@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Planina{
+    char naziv[30];
+    int visina;
+};
+
+int ucitaj(struct Planina *planine, int n){
+    FILE *ulaz =fopen("ulaz.txt", "r");
+    int brojac=0;
+    struct Planina *pok=planine;
+    struct Planina *iza_kraja=planine+n;
+    for(;pok<iza_kraja;pok++){
+        if(fscanf(ulaz, "%s %d",(*pok).naziv, &(*pok).visina)==2){
+            brojac++;
+        }
+    }
+    fclose(ulaz);
+    return brojac;
+}
+
+void zapisi(struct Planina *planine,int vel,int max_visina){
+    FILE *izlaz = fopen("izlaz.txt", "w");
+    struct Planina *pok=planine;
+    struct Planina *iza_kraja=planine+vel;
+    for(;pok<iza_kraja;pok++){
+        if((*pok).visina>max_visina){
+            fputs((*pok).naziv,izlaz);
+            //fwrite(izlaz,sizeof(struct Planina),);
+        }
+    }
+    fclose(izlaz);
+}
+int main() {
+	//printf("Lekcija 10: Datoteke sa strukturama, Planine");
+	return 0;
+}
