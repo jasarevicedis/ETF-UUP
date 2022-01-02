@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+int main() {
+	FILE *ulaz = fopen("ulaz.txt", "r");
+	FILE *izlaz = fopen("izlaz.txt", "w");
+    char c;
+    int cudni_pokazivac;// :)
+    int max=0,brojac=1,counter=0;
+    char p=fgetc(ulaz);
+    while((c=fgetc(ulaz))!=EOF){
+        counter++;
+        
+        if(c==p+1){
+            brojac++;
+        }
+        else{
+            if(brojac>max){
+                max=brojac;
+                cudni_pokazivac=counter;
+            }
+            brojac=1;
+        }
+        p=c;
+
+    }
+    cudni_pokazivac-=max;
+    int i;
+    fclose(ulaz);
+	FILE *ulaz2 = fopen("ulaz.txt", "r");
+    for(i=0;i<cudni_pokazivac;i++){
+        c=fgetc(ulaz2);
+        
+    }
+    for(i=0;i<max;i++){
+        c=fgetc(ulaz2);
+        fprintf(izlaz, "%c", c);
+    }
+    //printf("%d %d", max, cudni_pokazivac);
+    fclose(izlaz);
+    fclose(ulaz2);
+	return 0;
+}
