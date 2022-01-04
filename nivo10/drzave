@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Drzava {
+   char ime_drzave[50], glavni_grad[50];
+   int broj_stanovnika, broj_stanovnika_gg;
+};
+struct Drzava drzave[1000];
+int br_drzava;
+
+void tacka_2_space(char *s){
+    char *pok=s;
+    char *iza_kraja=pok;
+    while(*iza_kraja!='\0'){
+        iza_kraja++;
+    }
+    for(;pok<iza_kraja;pok++){
+        if(*pok=='.'){
+            *pok=' ';
+        }
+    }
+}
+
+void ucitaj(){
+    FILE *ulaz = fopen("ulaz.txt", "r");
+    struct Drzava *pok= drzave;
+    int brojac=0;
+    int c;
+    int i;
+    do {
+        if(pok==NULL){
+            break;
+        }
+        i=-1;
+        do {
+            if(i<50) i++;
+            (*pok).ime_drzave[i]=fgetc(ulaz);
+        }while ((*pok).ime_drzave[i]!=' ' && i!=50 && (*pok).ime_drzave[i]!='\0');
+        
+        c=fscanf(ulaz, "%d", &(*pok).broj_stanovnika);
+        if(c!=1){
+            break;
+        }
+        if(c==0){
+            break;
+        }
+        fgetc(ulaz);
+        i=-1;
+        do {
+            if(i<50) i++;
+            (*pok).glavni_grad[i]=fgetc(ulaz);
+        }while ((*pok).glavni_grad[i]!=' ' && i!=50);
+        
+        c=fscanf(ulaz, "%d ", &(*pok).broj_stanovnika_gg);
+        if(c==0){
+            break;
+        }
+        //++;
+        if((*pok).ime_drzave[0]=='\0'){
+            //brojac=1;
+            break;
+        }
+        brojac++;
+        pok++;
+        
+    }while (brojac<1000 && c==1);
+    //brojac--;
+    int *broj_drzava=&br_drzava;
+    *broj_drzava=brojac;
+    fclose(ulaz);
+}
+ double racunaj_postotak(struct Drzava d){
+    double kolicnik=(double)d.broj_stanovnika_gg/d.broj_stanovnika;
+    return kolicnik;
+}
+void zapisi(){
+    FILE *izlaz=fopen("izlaz.txt", "w");
+    struct Drzava *pok=drzave;
+    struct Drzava *iza_kraja=drzave+br_drzava;
+    for(;pok<iza_kraja;pok++){
+        tacka_2_space((*pok).ime_drzave);
+        tacka_2_space((*pok).glavni_grad);
+        if(racunaj_postotak(*pok)>0.2){
+            fprintf(izlaz, "%s %d %.2lf\n", (*pok).ime_drzave, (*pok).broj_stanovnika, 100*racunaj_postotak(*pok));
+            //printf("%s %s", (*pok).ime_drzave, (*pok).glavni_grad);
+        }
+    }
+    fclose(izlaz);
+    //printf("%d/", br_drzava);
+}
+
+
+int main() {
+	printf("Lekcija 10: Datoteke sa strukturama, Države");
+	return 0;
+}
