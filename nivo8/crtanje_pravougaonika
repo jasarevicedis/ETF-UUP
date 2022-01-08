@@ -1,0 +1,157 @@
+    #include <stdio.h>
+
+    /* 
+    4.test ovog zadatka je nerealno postavljen, ali evo i rjesenje na taj nacin
+    */ 
+
+    //strukture
+    struct Tacka {
+        int x,y;
+    };
+    struct Pravougaonik {
+        struct Tacka tacka;
+        int sirina;
+        int visina;
+    };
+
+
+    int crtaj_pravougaonike(struct Pravougaonik *niz, int velicina){
+        int max_sirina=0,max_visina=0;
+        int uspjesni=0, i,j;
+        int x_poc,y_poc,x_kraj,y_kraj;
+        
+        char mat[100][100];
+        for(i=0;i<100;i++){
+            for(j=0;j<100;j++){
+                mat[i][j]=' ';
+            }
+        }
+        int sirina,visina,error1,error2;
+        struct Tacka max;
+        struct Pravougaonik *pok=niz;
+        struct Pravougaonik *iza_kraja=niz+velicina;
+        for(;pok<iza_kraja;pok++){
+            
+            error1=0;
+            error2=0;
+            x_poc=(*pok).tacka.x;
+            y_poc=(*pok).tacka.y;
+            
+            sirina=(*pok).sirina-1;
+            visina=(*pok).visina-1;
+            x_kraj=x_poc+visina;
+            y_kraj=y_poc+sirina;
+            if(x_kraj<0){
+                
+                error2++;
+            }
+            if(y_kraj<0){
+                //y_kraj=99;
+                error2++;
+            }
+            if(x_kraj>100){
+                x_kraj=99;
+                error1++;
+            }
+            if(y_kraj>100){
+                y_kraj=99;
+                error1++;
+            }
+            int greska=0;
+            if(x_poc<0){
+                greska++;
+                x_poc=0;
+                error1++;
+            }
+            if(y_poc<0){
+                greska++;
+                y_poc=0;
+                error1++;
+            }
+
+            if(error2==0){
+                if(error1==0){
+                    uspjesni++;
+                   
+                }
+                if(x_kraj && y_kraj>0){
+                    if(greska==0){
+                        for(i=x_poc;i<=x_kraj;i++){
+                            mat[i][y_poc]='*';
+                             mat[i][y_kraj]='*';
+                        }
+                    }
+                    else{
+                        for(i=x_poc;i<=x_kraj;i++){
+                            
+                             mat[i][y_kraj]='*';
+                        }
+                        mat[x_poc][y_poc]='*';
+                        mat[x_kraj][y_poc]='*';
+                    }
+            for(i=y_poc;i<=y_kraj;i++){
+                mat[x_poc][i]='*';
+                mat[x_kraj][i]='*';
+
+            }
+                }
+                 
+                if(x_kraj>max_visina){
+                max_visina=x_kraj;
+            }
+            if(y_kraj>max_sirina){
+                max_sirina=y_kraj;
+            }
+
+            
+            }
+            
+            
+            
+            
+            
+        }
+        int counter;
+        int br_char;
+        for(i=0;i<=max_visina;i++){
+            br_char=0;
+            counter=0;
+            for(j=0;j<=max_sirina;j++){
+                if(mat[i][j]==' '){
+                    counter++;
+                }
+            }
+            //("(%d %d)", counter, max_sirina);
+            if(counter!=max_sirina+1){
+                for(j=0;j<=max_sirina;j++){
+                    /*
+                    if(error1!=0){
+                        if(mat[i][0]==' '){
+                            while(mat[i][j]!='*' && j!=max_sirina){
+                                j++;
+                            }
+
+                        }
+                    }
+                    */
+                    printf("%c", mat[i][j]);
+                    
+                }
+                printf("\n");
+            }
+        }    
+        /*
+        for(i=0;i<=max_visina;i++){
+            for(j=0;j<=max_sirina;j++){
+                printf("%c", mat[i][j]);
+            }
+            printf("\n");
+        }
+        */
+        return uspjesni;
+    }
+
+    int main() {
+        printf("Lekcija 8: Strukture, Crtanje pravougaonika");
+        return 0;
+    }
