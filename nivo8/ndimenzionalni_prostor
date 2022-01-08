@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <math.h>
+
+struct Tacka {
+	double koordinata[100];
+};
+
+double racunaj_daljinu(struct Tacka A, struct Tacka B, int d){
+    int i;
+    double daljina=0;
+    for(i=0;i<d;i++){
+        daljina+=(A.koordinata[i]-B.koordinata[i])*(A.koordinata[i]-B.koordinata[i]);
+    }
+    daljina=sqrt(daljina);
+    return daljina;
+}
+int izbaci_najblize(struct Tacka *tacka, int vel,int d){
+    double daljina,najmanja_daljina=1000;
+    struct Tacka *prva,*druga;
+    struct Tacka *pok=tacka;
+    struct Tacka *iza_kraja=tacka+vel;
+    struct Tacka *temp=tacka;
+    if(vel<1){
+        return 0;
+    }
+    if(vel==1){
+        return 1;
+    }
+    for(;pok<iza_kraja;pok++){
+        temp=pok;
+        for(;temp<iza_kraja;temp++){
+            daljina=racunaj_daljinu(*pok, *temp, d);
+            //printf("%lf/", daljina);
+            if(temp!=pok && daljina<najmanja_daljina){
+                najmanja_daljina=daljina;
+                prva=pok;
+                druga=temp;
+            }
+        }
+    }
+    //printf("(%lf %lf)",(*prva).koordinata[0],(*druga).koordinata[0]);
+    //printf("%lf)", najmanja_daljina);
+    pok=tacka;
+    for(;pok<iza_kraja;pok++){
+        if(pok==prva){
+            temp=pok;
+            for(;temp<iza_kraja-1;temp++){
+                *temp=*(temp+1);
+            }
+            iza_kraja--;
+            //pok--;
+            druga--;
+        }
+        if(pok==druga){
+            temp=pok;
+            for(;temp<iza_kraja-1;temp++){
+                *temp=*(temp+1);
+            }
+            iza_kraja--;
+            //pok--;
+            prva--;
+        }
+    }
+    return vel-2;
+}
+   
+int main() {
+	printf("Lekcija 8: Strukture, n-dimenzionalni prostor");
+	return 0;
+}
