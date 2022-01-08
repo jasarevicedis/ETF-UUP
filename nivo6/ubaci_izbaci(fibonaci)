@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <math.h>
+
+int saberi_cifre(int n){
+    if(n<0){
+        n*=-1;
+    }
+    int suma=0;
+    while(n>0){
+        suma+=n%10;
+        n/=10;
+    }
+    return suma;
+}
+int je_li_fibonaci(int n){
+    if(n<0){
+        n*=-1;
+    }
+    int a=1,b=1;
+    while(a<n && b<n){
+        a=a+b;
+        b=a+b;
+    }
+    if(n==a || n==b){
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+void ubaci(int *niz,int vel){
+    int *pok=niz;
+    int *iza_kraja=pok+vel;
+    int *temp=NULL;
+    int zbir_cifara;
+    for(;pok<iza_kraja;pok++){
+        zbir_cifara=saberi_cifre(*pok);
+        
+        temp=iza_kraja;
+        iza_kraja++;
+        for(;temp>pok+1;temp--){
+            *temp=*(temp-1);
+        }
+        pok++;
+        *pok=zbir_cifara;
+    }
+}
+int izbaci(int *niz,int vel){
+    
+    int *pok=niz;
+    int *iza_kraja=niz+vel;
+    int *temp=NULL;
+    for(;pok<iza_kraja;pok++){
+        if(je_li_fibonaci(*pok)==1 && *pok>0){
+            
+            temp=pok;
+            for(;temp<iza_kraja-1;temp++){
+                *temp=*(temp+1);
+            }
+            iza_kraja--;
+            vel--;
+            pok--;
+        }
+    }
+    
+    return vel;
+}
+int main() {
+    int niz[20];
+    int i;
+	printf("Unesite niz od 10 brojeva: ");
+    for(i=0;i<10;i++){
+        scanf("%d", &niz[i]);
+    }
+    ubaci(niz, 10);
+    int velicina=izbaci(niz,20);
+
+    printf("Modificirani niz glasi: ");
+    for(i=0;i<velicina;i++){
+        if(i==velicina-1){
+            printf("%d. ", niz[i]);
+        }
+        else{
+            printf("%d, ", niz[i]);
+        }
+        
+    }
+	return 0;
+}
