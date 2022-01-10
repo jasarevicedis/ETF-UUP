@@ -1,0 +1,76 @@
+#include <stdio.h>
+
+int main() {
+	FILE *input = fopen("genetski_kod.txt", "r");
+    if(input==NULL){
+        printf("Pogresan format");
+        return 0;
+    }
+    char a,b,c,ch;
+    char x,y,z;
+    int brojac=0;
+    while((ch=fgetc(input))!=EOF){
+        brojac++;
+        if(ch!='A' && ch!='G' && ch !='T' && ch!='C'){
+            printf("Pogresan format");
+            return 0;
+        }
+    }
+    if(brojac==3){
+        fseek(input,0,SEEK_SET);
+        printf("%c",fgetc(input));
+        printf("%c",fgetc(input));
+        printf("%c",fgetc(input));
+
+        return 0;
+    }
+    if(brojac==0){
+        printf("Pogresan format");
+        return 0;
+    }
+    //printf("%d/", brojac);
+    if(brojac%3!=0){
+        printf("Pogresan format");
+        return 0;
+    }
+    fseek(input,0,SEEK_SET);
+    //random vrijednost za x,y,z na pocetku
+    x='a';
+    y='a';
+    z='a';
+    brojac=1;
+    int max=0;
+    char prvi='a',drugi='a',treci='a';
+    while((a=fgetc(input))!=EOF ){
+        b=fgetc(input);
+        c=fgetc(input);
+        if(b==EOF || c==EOF){
+            printf("greska");
+            break;
+        }
+
+        //printf("(%c %c %c)", a,b,c);
+        if(a==x && b==y && c==z){
+            brojac++;
+            if(brojac>max){
+                max=brojac;
+                prvi=x;
+                drugi=y;
+                treci=z;
+            }
+        }
+        
+        else{
+            
+            brojac=1;
+        }
+        x=a;
+        y=b;
+        z=c;
+        //printf("%c%c%c %d/", x,y,z,brojac);
+    }
+    
+    printf("%c%c%c", prvi,drugi,treci);
+    fclose(input);
+	return 0;
+}
