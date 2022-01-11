@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+
+void unesi (char* niz, int vel) {
+    int i=0;
+    char z=getchar();
+    if (z=='\n') {z=getchar();}
+    while (z!='\n' && i<vel-1) {
+        niz[i]=z;
+        i++;
+        z=getchar();
+    }
+    niz[i]='\0';
+}
+
+/* Ovdje napisite funkciju zamijeni_slova */
+char *zamijeni_slova(char *prvi, char *drugi){
+    int i;
+    char *pok1=prvi;
+    char *iza_kraja1=prvi;
+    while(*iza_kraja1!='\0'){
+        iza_kraja1++;
+    }
+    char* pok2=drugi;
+    char *iza_kraja2=drugi;
+    char trazeni,zamjenski;
+    while(*iza_kraja2!='\0'){
+        iza_kraja2++;
+    }
+    iza_kraja2--;
+    int duzina_drugog=strlen(drugi);
+    duzina_drugog=duzina_drugog/2;
+    for(i=0;i<duzina_drugog;i++){
+        trazeni=*pok2;
+        zamjenski=*iza_kraja2;
+        pok1=prvi;
+        for(;pok1<iza_kraja1;pok1++){
+            if(*pok1==trazeni){
+                *pok1=zamjenski;
+            }
+        }
+        pok2++;
+        iza_kraja2--;
+    }
+    return prvi;
+}
+
+int main() {
+    char tekst[100], slova[100];
+    printf("Unesite neki tekst: ");
+    unesi(tekst, 100);
+    printf("Unesite string sa slovima za zamjenu: ");
+    unesi(slova, 100);
+    zamijeni_slova(tekst, slova);
+    printf("Nakon transformacije tekst glasi: '%s'\n", tekst);
+    return 0;
+}
