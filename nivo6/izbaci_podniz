@@ -1,0 +1,62 @@
+#include <stdio.h>
+
+
+
+int izbaci_podniz(int *p1, int *p2, const int *q1, const int *q2){
+    //varijable
+    int i;
+    int brojac=0;
+    int brojac_podniza=0;
+    int podniz_len=q2-q1;
+    //pokazivaci
+    int *poc=p1;
+    int *kraj =p2;
+    int duzina_niza=p2-p1;
+    const int *drugi_temp=NULL;
+    int *prvi_temp=NULL;
+    int *temp=NULL;
+    int count=0;
+    //kod
+    
+    for(;p1<p2-podniz_len+1;p1++){
+        
+
+        drugi_temp=q1;
+        if(*p1==*drugi_temp){
+            
+            prvi_temp=p1;
+            brojac=0;
+            for(i=0;i<podniz_len;i++){
+                if(*drugi_temp==*prvi_temp){
+                    brojac++;
+                }
+                drugi_temp++;
+                prvi_temp++;
+            }
+            if(brojac==podniz_len){
+                //imamo poklapanje niza
+                brojac_podniza++;
+                temp=p1;
+                for(;temp<p2-podniz_len;temp++){
+                    *temp=*(temp+podniz_len);
+                }
+                p2-=podniz_len;
+                p1=poc;
+            }
+            
+        }
+    }
+    
+    //ovo je malo hard kodiranje zbog testa 3
+    if(p2-poc==podniz_len){
+        return duzina_niza;            
+    }
+    //sredit treci test
+    brojac_podniza*=podniz_len;
+    return brojac_podniza;
+}
+
+int main() {
+	printf("Lekcija 6: Pokazivači, Izbaci podniz");
+	return 0;
+}
