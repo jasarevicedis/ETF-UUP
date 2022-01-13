@@ -1,0 +1,167 @@
+#include <stdio.h>
+
+int nadji_najmanji(int *niz1,int vel1, int *niz2,int vel2, int *niz3, int vel3){
+    //1
+    int *pok1=niz1;
+    int *iza_kraja1=niz1+vel1;
+    //2
+    int *pok2=niz2;
+    int *iza_kraja2=niz2+vel2;
+    //3
+    int *pok3=niz3;
+    int *iza_kraja3=niz3+vel3;
+    int najmanji=100000000;
+    for(;pok1<iza_kraja1;pok1++){
+        if(*pok1<najmanji){
+            najmanji=*pok1;
+        }
+    }
+    for(;pok2<iza_kraja2;pok2++){
+        if(*pok2<najmanji){
+            najmanji=*pok2;
+        }
+    }
+    for(;pok3<iza_kraja3;pok3++){
+        if(*pok3<najmanji){
+            najmanji=*pok3;
+        }
+    }
+    return najmanji;
+}
+int nadji_najveci(int *niz1,int vel1, int *niz2,int vel2, int *niz3, int vel3){
+    //1
+    int *pok1=niz1;
+    int *iza_kraja1=niz1+vel1;
+    //2
+    int *pok2=niz2;
+    int *iza_kraja2=niz2+vel2;
+    //3
+    int *pok3=niz3;
+    int *iza_kraja3=niz3+vel3;
+    int najveci=-100000000;
+    for(;pok1<iza_kraja1;pok1++){
+        if(*pok1>najveci){
+            najveci=*pok1;
+        }
+    }
+    for(;pok2<iza_kraja2;pok2++){
+        if(*pok2>najveci){
+            najveci=*pok2;
+        }
+    }
+    for(;pok3<iza_kraja3;pok3++){
+        if(*pok3>najveci){
+            najveci=*pok3;
+        }
+    }
+    return najveci;
+}
+int trazi_u_nizu( int broj,int *niz1,int vel1, int *niz2,int vel2, int *niz3, int vel3){
+    
+    //1
+    int *pok1=niz1;
+    int *iza_kraja1=niz1+vel1;
+    //2
+    int *pok2=niz2;
+    int *iza_kraja2=niz2+vel2;
+    //3
+    int *pok3=niz3;
+    int *iza_kraja3=niz3+vel3;
+    for(;pok1<iza_kraja1;pok1++){
+        if(broj==*pok1){
+            return 1;
+        }
+    }
+    for(;pok2<iza_kraja2;pok2++){
+        if(broj==*pok2){
+            return 1;
+        }
+    }
+    for(;pok3<iza_kraja3;pok3++){
+        if(broj==*pok3){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+/* Ovdje napisite vasu funkciju */
+int dva_od_tri( int *niz1,int vel1, int *niz2,int vel2, int *niz3, int vel3){
+    int broj_duplih=0;
+    int brojac;
+    int najveci=nadji_najveci(niz1, vel1, niz2, vel2, niz3, vel3);
+    int najmanji=nadji_najmanji(niz1, vel1, niz2, vel2, niz3, vel3);
+    //printf("(%d %d)", najmanji, najveci);
+    //1
+    int i;
+    int *pok1=niz1;
+    int *iza_kraja1=niz1+vel1;
+    //2
+    int *pok2=niz2;
+    int *iza_kraja2=niz2+vel2;
+    //3
+    int *pok3=niz3;
+    int *iza_kraja3=niz3+vel3;
+    
+    int je_li_u_nizu;
+    for(i=najmanji;i<=najveci;i++){
+        je_li_u_nizu=trazi_u_nizu(i, niz1, vel1, niz2, vel2, niz3, vel3);
+        if(je_li_u_nizu==1){
+            brojac=0;
+            pok1=niz1;
+            pok2=niz2;
+            pok3=niz3;
+            for(;pok1<iza_kraja1;pok1++){
+                if(i==*pok1){
+                    brojac++;
+                    break;
+                }
+            }
+            for(;pok2<iza_kraja2;pok2++){
+                if(i==*pok2){
+                    brojac++;
+                    break;
+                }
+            }
+            for(;pok3<iza_kraja3;pok3++){
+                if(i==*pok3){
+                    brojac++;
+                    break;
+                }
+            }
+            if(brojac==2){
+                broj_duplih++;
+            }
+        }
+    }
+    return broj_duplih;
+}
+
+
+int main() {
+    int A[100], B[100], C[100], velA, velB, velC, i, rez;
+    printf ("Unesite niz A (-1 za kraj): ");
+    for (i=0; i<100; i++) {
+        scanf("%d", &A[i]);
+        if (A[i] == -1) break;
+    }
+    velA = i;
+    printf ("Unesite niz B (-1 za kraj): ");
+    for (i=0; i<100; i++) {
+        scanf("%d", &B[i]);
+        if (B[i] == -1) break;
+    }
+    velB = i;
+    printf ("Unesite niz C (-1 za kraj): ");
+    for (i=0; i<100; i++) {
+        scanf("%d", &C[i]);
+        if (C[i] == -1) break;
+    }
+    velC = i;
+  
+    rez = dva_od_tri(A, velA, B, velB, C, velC);
+  
+    printf("%d clanova se nalaze u dva od tri niza.", rez);
+    return 0;
+}
