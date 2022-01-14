@@ -1,0 +1,128 @@
+#include <stdio.h>
+
+struct Prodavnica {
+	char naziv[100];
+	int ID;	
+};
+struct Artikal {
+	char naziv[100];
+	double cijena;
+	int prodavnica;
+};	
+
+//funkcije
+
+int ucitaj_artikle (struct Artikal *niz, int kap){
+   
+    int broj_ucitanih;
+    FILE *artikli= fopen("artikli.bin","rb");
+    if(artikli==NULL){
+        return 0;
+    }
+    broj_ucitanih=fread(niz,sizeof(struct Artikal),kap,artikli);
+    fclose(artikli);
+    return broj_ucitanih;
+    
+}
+int ucitaj_prodavnice (struct Prodavnica *niz, int kap){
+    FILE *prodavnice=fopen("prodavnice.txt", "r");
+    struct Prodavnica *pok=niz;
+    int broj_ucitanih=0;
+    char c;
+    int i=0;
+    while(broj_ucitanih<kap){
+        i=0;
+        while((i<99)&&((c=fgetc(prodavnice))!=',')){
+            (*pok).naziv[i++]=c;
+        }
+        (*pok).naziv[i]='\0';
+        //prekoracenje
+        if(i==99){
+            c=fgetc(prodavnice);
+            while((c!=',') && (c!=EOF) && (c!='\n')){
+                c=fgetc(prodavnice);
+            }
+        }
+        if(fscanf(prodavnice,"%d\n", &(*pok).ID)==1){
+            pok++;
+            broj_ucitanih++;
+        }
+        else{
+            break;
+        }
+        
+    }
+    fclose(prodavnice);
+    return broj_ucitanih;
+}
+double racunaj_prosjek(struct Artikal *a, int na){
+    struct Artikal *pok=a;
+    struct Artikal *iza_kraja=a+na;
+    double suma=0,prosjek;
+    for(;pok<iza_kraja;pok++){
+        suma+=(*pok).cijena;
+    }
+    prosjek=suma/na;
+    return prosjek;
+}
+int izbaci_skupe (struct Prodavnica *p, int np, struct Artikal *a, int na){
+    double ukupan_prosjek=racunaj_prosjek(a,na);
+    double suma;
+    int brojac;
+    double prosjek;
+    struct Prodavnica *pok=p;
+    struct Prodavnica *temp=NULL;
+    struct Prodavnica *iza_kraja=p+np;
+    struct Artikal *art=a;
+    struct Artikal *art_kraj=a+na;
+    for(;pok<iza_kraja;pok++){
+        art=a;
+        suma=0;
+        brojac=0;
+        prosjek=0;
+        for(;art<art_kraj;art++){
+            if((*pok).ID==(*art).prodavnica){
+                suma+=(*art).cijena;
+                brojac++;
+            }
+        }
+        if(brojac>0){
+            prosjek=suma/brojac;
+        }
+        if(prosjek>ukupan_prosjek){
+            temp=pok;
+            for(;temp<iza_kraja-1;temp++){
+                *temp=*(temp+1);
+            }
+            iza_kraja--;
+            pok--;
+            np--;
+        }
+
+    }
+    return np;
+}
+int sacuvaj (struct Prodavnica *p, int n, const char *ime_datoteke){
+    int provjera;
+    FILE *ispis=fopen(ime_datoteke,"wb");
+    if(ispis==NULL){
+        return 0;
+    }
+    struct Prodavnica *pok=p;
+    struct Prodavnica *iza_kraja=p+n;
+    for(;pok<iza_kraja;pok++){
+        provjera=fwrite((*pok).naziv,100,1,ispis);
+        provjera+=fwrite(&(*pok).ID,sizeof(int),1,ispis);
+        if(provjera!=2){
+            fclose(ispis);
+            return 0;
+        }
+    }
+    fclose(ispis);
+    return 1;
+}
+
+int main() {
+	printf("Lekcija 10: Datoteke sa strukturama, Prodavnice i artikli");
+	return 0;
+}
