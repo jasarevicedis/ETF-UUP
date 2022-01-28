@@ -1,0 +1,54 @@
+#include <stdio.h>
+
+int obrnut_podstring(const char *string, const char *podstring){
+    const char *pok1, *pok2;
+    const char *str=string;
+    const char *pocetak=string;
+    const char *podstr = podstring;
+    int duzina=0;
+
+    while(*podstr!='\0'){
+        podstr++;
+        duzina++;
+    }
+    podstr=podstring;
+    while(*str!='\0'){
+        str++;
+    }
+    str--;
+    int brojac;
+    if(*podstr=='\0'){
+        return 0;
+    }
+    for(;str>=pocetak+duzina-1;str--){
+        if(*str==*podstr){
+            pok1=str;
+            pok2=podstr;
+            brojac=0;
+            while(*pok2!='\0'){
+                /*
+                while(*pok1==*(pok1+1)){
+                    pok1--;
+                }
+                */
+                if(*pok1==*pok2){
+                    brojac++;
+                }
+                else{
+                    break;
+                }
+                pok2++;
+                pok1--;
+            }
+            if(brojac==duzina){
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+int main() {
+	printf("Lekcija 7: Stringovi, Obrnut podstring");
+	return 0;
+}
