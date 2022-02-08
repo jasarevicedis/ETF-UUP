@@ -9,7 +9,18 @@ int main() {
 void ispisi(int *niz,int n){
     int i;
     int x;
+    int *pok=niz;
+    int *iza_kraja=niz+n;
     printf("{");
+    for(;pok<iza_kraja;pok++){
+        printf("%d", *pok);
+        if(pok!=iza_kraja-1){
+            printf(", ");
+        }
+    }
+
+    //VRACENO NA DORADU(TRIVIJALNO)
+    /*
     for(i=0;i<n;i++){
         x=*(niz+i);
         printf("%d", x);
@@ -17,5 +28,6 @@ void ispisi(int *niz,int n){
             printf(", ");
         }
     }
+    */
     printf("}");
 }
