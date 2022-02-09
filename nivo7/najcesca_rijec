@@ -1,0 +1,118 @@
+//PREPISANOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+#include <stdio.h>
+
+int je_li_slovo(char c){
+    if((c>='A' && c<='Z') || (c>='a' && c<='z')){
+        return 1;
+    }
+    return 0;
+}
+
+char *trazi_rijec(char *string, char *rijec){
+    
+    char *poc=string;
+    char *pok=NULL;
+    char *r=rijec;
+    int nadjeno;
+
+    while(*string!='\0'){
+        pok=string;
+        nadjeno=1;
+        while(je_li_slovo(*rijec) && *pok!='\0'){
+            if(!(*rijec==*pok || *rijec+32==*pok || *rijec-32==*pok)){
+                nadjeno=0;
+            }
+            rijec++;
+            pok++;
+        }
+        if(nadjeno && !je_li_slovo(*rijec) &&(string==poc || !je_li_slovo(*(string-1))) && !je_li_slovo(*pok)){
+            return string;
+        }
+        rijec=r;
+        string++;
+    }
+    return NULL;
+}
+
+void obrisi_rijec(char *string, char *rijec){
+    int duzina=0;
+
+    while(je_li_slovo(*(rijec+duzina))){
+        duzina++;
+    }
+    char *poc=trazi_rijec(string,rijec);
+    char *pok=poc;
+
+    while(*(pok+duzina)!='\0'){
+        *pok=*(pok+duzina);
+        pok++;
+    }
+    *pok='\0';
+}
+
+char *nadji_najcescu(char *string, int *br_pon){
+    int max=0;
+    int brojac=0;
+    char *poc=string;
+    char *najcesca=string;
+    char *rijec=string;
+    char *nadjena=string;
+
+    while(*rijec!='\0'){
+        brojac=0;
+        string=poc;
+        while(!je_li_slovo(*rijec)){
+            if(*rijec=='\0'){
+                *br_pon=max;
+                return najcesca;
+                
+            }
+            rijec++;
+        }
+        while(trazi_rijec(string,rijec)){
+            brojac++;
+            string=trazi_rijec(string,rijec);
+            nadjena=string;
+            while(je_li_slovo(*string)){
+                string++;
+            }
+            while(!je_li_slovo(*string) && *string!='\0'){
+                string++;
+            }
+        }
+            if(brojac>max){
+                max=brojac;
+                najcesca=nadjena;
+            }
+            rijec++;
+            while(je_li_slovo(*rijec)){
+                rijec++;
+            }
+        
+    }
+    *br_pon=max;
+    return najcesca;
+}
+
+
+char* izbaci_najcescu(char* s){
+    int br_ponavljanja;
+    char *najcesca=nadji_najcescu(s,&br_ponavljanja);
+    
+    //printf("%d)", br_ponavljanja);
+    int duzina=0;
+    while(je_li_slovo(*(najcesca+duzina))){
+        duzina++;
+    }
+    while(br_ponavljanja>0){
+        br_ponavljanja--;
+        obrisi_rijec(s,najcesca);
+        najcesca=najcesca-duzina;
+    }
+    return s;
+}
+
+int main() {
+	printf("Lekcija 7: Stringovi, Izbaci najčešću");
+	return 0;
+}
