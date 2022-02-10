@@ -1,0 +1,123 @@
+#include <stdio.h>
+ 
+#define MAX_H 100
+#define MAX_W 100
+ 
+int valjana_ploca(int *ploca, int sirina, int visina)
+{
+    int i,j;
+    // Provjera dodira horizontalni i vertikalni brodic
+    for(i=0;i<visina;i++){
+        for(j=0;j<sirina;j++){
+            int up, down, left, right;
+            up = 0;
+            down = 0;
+            left = 0;
+            right = 0;
+            if(i > 0 && *(ploca + (i-1)*sirina + j)) up = 1;
+            if(i < visina - 1 && *(ploca + (i+1)*sirina + j)) down = 1;
+            if(j > 0 && *(ploca + i*sirina + j - 1)) left = 1;
+            if(j < sirina - 1 && *(ploca + i*sirina + j + 1)) right = 1;
+            
+        }
+    }
+    // Prebrojavanje brodova
+    int brodovi_br[4] = { 0, 0, 0, 0 };
+    int pom = 0;
+    // Horizontalni brodovi && provjera horizontalnih dodira
+    for(i=0;i<visina;i++){
+        pom = 0;
+        for(j=0;j<sirina;j++){
+            int up, down;
+            up = 0;
+            down = 0;
+            if(i > 0 && *(ploca + (i-1)*sirina + j)) up = 1;
+            if(i < visina - 1 && *(ploca + (i+1)*sirina + j)) down = 1;
+            if(*(ploca + i*sirina + j) && !(up | down)) pom++;
+            else {
+                if(pom > 4) return 0;
+                if(pom > 0) brodovi_br[pom-1]++;
+                pom = 0;
+            }
+        }
+        if(pom > 4) return 0;
+        if(pom > 0) brodovi_br[pom-1]++;
+    }
+    // Horizontalni brodovi && provjera horizontalnih dodira
+    for(j=0;j<sirina;j++){
+        pom = 0;
+        for(i=0;i<visina;i++){
+            int left, right;
+            left = 0;
+            right = 0;
+            if(j > 0 && *(ploca + i*sirina + j - 1)) left = 1;
+            if(j < sirina - 1 && *(ploca + i*sirina + j + 1)) right = 1;
+            if(*(ploca + i*sirina + j) && !(left | right)) pom++;
+            else {
+                if(pom > 4) return 0;
+                if(pom > 0) brodovi_br[pom-1]++;
+                pom = 0;
+            }
+        }
+        if(pom > 4) return 0;
+        if(pom > 0) brodovi_br[pom-1]++;
+    }
+    // Dijelimo sa dva jer se broji i horizontalno i vertikalno
+    brodovi_br[0] /= 2;
+    // Provjera da li ima onoliko brodova koliko treba da ima
+    
+    return brodovi_br[3] == 1 && brodovi_br[2] == 2 && brodovi_br[1] == 3 && brodovi_br[0] == 4;
+}
+ 
+void crtanje_ploce(int *ploca, int sirina, int visina)
+{
+    int i,j;
+    for(i=0;i<visina;i++){
+        for(j=0;j<sirina;j++){
+            if(*(ploca + i*sirina + j)) printf("X");
+            else printf(" ");
+        }
+        printf("\n");
+    }
+}
+ 
+int main()
+{
+    int ploca[MAX_W * MAX_H];
+    int sirina, visina;
+    
+    scanf("%d", &sirina);
+    scanf("%d", &visina);
+    // Provjera sirine i visine ploce
+    if(sirina > MAX_W || visina > MAX_H){
+        printf("Neispravan unos");
+        return 0;
+    }
+    if(sirina<=0 || visina<=0){
+        printf("Neispravan unos");
+        return 0;
+    }
+    // Unos ploce
+    int i,j;
+    int ispravan_unos = 1;
+    
+    for(i=0;i<visina;i++){
+        for(j=0;j<sirina;j++){
+            scanf("%d", ploca + i*sirina + j);
+            if(*(ploca + i*sirina + j) > 1 || *(ploca + i*sirina + j) < 0) ispravan_unos = 0;
+        }
+    }
+    
+    if(!ispravan_unos){
+        printf("Neispravan unos");
+        return 0;
+    }
+    // Prikaz ploce
+    
+    crtanje_ploce(ploca, sirina, visina);
+    // Prikaz ispravnosti
+    if(valjana_ploca(ploca, sirina, visina)) printf("Ploca je ispravna.");
+        
+    else printf("Ploca je neispravna.");
+    return 0;
+}
