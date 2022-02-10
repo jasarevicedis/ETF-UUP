@@ -1,0 +1,73 @@
+#include <stdio.h>
+
+int je_li_samoglasnik(char c){
+    if(!(c=='a' || c=='e'|| c=='i' || c=='u' || c=='o' || c=='A' || c=='E' || c=='I' || c=='O' || c=='U')){
+        return 0;
+    }
+    return 1;
+}
+
+int je_li_veliko(char c){
+    if(c<='Z'){
+        return 1;
+    }
+    return 0;
+}
+char *satrovacki(char *string){
+    int test_velikog;
+    int br_samoglasnika=0;
+    int duzina=0;
+    char c;
+    int i;
+    char *pok=string;
+    char *iza_kraja=string;
+    char *kraj_sloga=string;
+    test_velikog=je_li_veliko(*string);
+
+    while(*iza_kraja!='\0'){
+        iza_kraja++;
+    }
+
+    while(br_samoglasnika==0 && *kraj_sloga!='\0'){
+        if(je_li_samoglasnik(*kraj_sloga)){
+            br_samoglasnika++;
+        }
+        
+        duzina++;
+        kraj_sloga++;
+    }
+    if(br_samoglasnika==0){
+        return string;
+    }
+    if(*(kraj_sloga)=='\0'){
+        return string;
+    }
+    if(je_li_samoglasnik(*(kraj_sloga+1))==0 && je_li_samoglasnik(*(kraj_sloga))!=1 && *kraj_sloga!='d' &&  *(kraj_sloga+1)!='j'){
+        kraj_sloga++;
+        duzina++;
+    }
+    
+    if(test_velikog==1){
+        *string+=32;
+        *kraj_sloga-=32;
+    }
+
+    for(i=0;i<duzina;i++){
+        c=*string;
+        pok=string;
+        for(;pok<iza_kraja-1;pok++){
+            *pok=*(pok+1);
+        }
+        *(iza_kraja-1)=c;
+    }
+    
+
+   
+    //printf("%d", duzina);
+    return string;
+}
+
+int main() {
+	printf("Lekcija 7: Stringovi, Šatrovački");
+	return 0;
+}
