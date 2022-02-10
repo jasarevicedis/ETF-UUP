@@ -1,0 +1,87 @@
+#include <stdio.h>
+
+int racunaj_duzinu(const char *pok){
+    int brojac=0;
+    while(*pok!=0){
+        brojac++;
+        pok++;
+    }
+    return brojac;
+}
+
+int uporedi_rijeci(char *pok1, const char *pok2, int cs){
+    int duzina=racunaj_duzinu(pok2);
+    int i=0;
+
+    if(cs==0){
+        while(i<duzina){
+            if(!(*pok1==*pok2 || *pok1-32==*pok2 || *pok1+32==*pok2)){
+                return 0;
+            }
+            i++;
+            pok1++;
+            pok2++;
+        }
+    }
+    else if(cs==1){
+        while(i<duzina){
+            if(*pok1!=*pok2){
+                return 0;
+            }
+            i++;
+            pok1++;
+            pok2++;
+        }
+    }
+    return 1;
+}
+void izbaci_rijec(char *pok1, char *pok2){
+    while(*pok2!='\0'){
+        *pok1++=*pok2++;
+    }
+    *pok1='\0';
+}
+void ubaci_rijec(char *pok1, const char *pok2){
+    int duzina=racunaj_duzinu(pok2);
+    char *iza_kraja=pok1;
+    while(*iza_kraja!=0){
+        iza_kraja++;
+    }
+    while(iza_kraja>=pok1){
+        *(iza_kraja+duzina)=*iza_kraja;
+        iza_kraja--;
+    }
+    while(*pok2!=0){
+        *pok1++=*pok2++;
+    }
+}
+
+char* zamijeni_tekst(char* str, const char *sta, const char *sa_cim, int cs){
+    char *pok=str;
+    int duzina_sta=racunaj_duzinu(sta);
+    while(*pok!=0){
+        if(cs==0){
+            if(*pok==*sta || *pok+32==*sta || *pok-32==*sta){
+                if(uporedi_rijeci(pok,sta,cs)){
+                    izbaci_rijec(pok,pok+duzina_sta);
+                    ubaci_rijec(pok,sa_cim);
+                }
+            }
+        }
+        else if(cs==1){
+            if(*pok==sta[0]){
+                if(uporedi_rijeci(pok,sta,cs)){
+                    izbaci_rijec(pok,pok+duzina_sta);
+                    ubaci_rijec(pok,sa_cim);
+                }
+            }
+        }
+        pok++;
+    }
+    return str;
+}
+
+int main() {
+	printf("Lekcija 7: Stringovi, Zamijeni tekst");
+	return 0;
+}
