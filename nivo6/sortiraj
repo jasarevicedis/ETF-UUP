@@ -1,0 +1,30 @@
+#include <stdio.h>
+
+void sortiraj(double niz[], int n){
+    double *pok=niz;
+    double *iza_kraja=niz+n;
+    double *min=NULL;
+    double *temp=NULL;
+    double broj;
+
+    for(;pok<iza_kraja;pok++){
+        min=pok;
+        temp=pok+1;
+        for(;temp<iza_kraja;temp++){
+            if(*temp>*min){
+                min=temp;
+            }
+        }
+        broj=*pok;
+        *pok=*min;
+        *min=broj;
+    }
+
+    
+}
+
+
+int main() {
+	printf("Lekcija 6: Pokazivači, Sortiraj");
+	return 0;
+}
