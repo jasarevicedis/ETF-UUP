@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+/* Ovdje napisite vasu funkciju */
+
+ int drugi(int niz[], int vel){
+     int i;
+     int max=-100000;
+     for(i=0;i<vel;i++){
+         if(niz[i]>max){
+             max=niz[i];
+         }
+     }
+     int index=-1;
+     int drugi_najveci=-10000;
+     for(i=0;i<vel;i++){
+         if(niz[i]>drugi_najveci && niz[i]!=max){
+             drugi_najveci=niz[i];
+             index=i;
+         }
+     }
+     //printf("%d %d", max,drugi_najveci);
+     return index;
+ }
+
+int main() {
+    int niz[100], i, rez;
+    printf("Unesite niz brojeva: ");
+    for (i=0; i<100; i++) {
+        scanf("%d", &niz[i]);
+        if (niz[i] == -1) break;
+    }
+
+    rez = drugi(niz, i);
+  
+    printf("Indeks drugog po velicini je: %d", rez);
+    return 0;
+}
