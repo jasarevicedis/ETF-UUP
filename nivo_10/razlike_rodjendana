@@ -1,0 +1,118 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Datum { 
+    int dan, mjesec, godina; 
+};
+struct Student {
+    char ime[20], prezime[20]; 
+    struct Datum datum_rodjenja;
+};
+//nove modifikovane strukture
+struct MiniDatum {
+    unsigned char dan,mjesec;
+    unsigned short godina;
+};
+struct MiniStudent {
+    char ime[20], prezime[20]; 
+    struct MiniDatum datum_rodjenja;
+};
+int je_li_prestupna(int godina){
+    if((godina%4==0 && godina%100!=0)|| godina%400==0){
+        return 1;
+    }
+    return 0;
+}
+
+int racunaj_od_0000(struct Datum datum){
+    int i;
+    int godina=datum.godina;
+    int mjesec=datum.mjesec;
+    int dan=datum.dan;
+    int broj_dana=0;
+    for(i=1;i<godina;i++){
+        if(je_li_prestupna(i)==1){
+            broj_dana+=366;
+        }
+        else{
+            broj_dana+=365;
+        }
+    }
+    for(i=1;i<mjesec;i++){
+        if(i==2 && je_li_prestupna(godina)==1){
+            broj_dana+=29;
+        }
+        else if(i==2 && je_li_prestupna(godina)==0){
+            broj_dana+=28;
+        }
+        else if(i==1 ||i==3 || i==5 ||i==7 || i==8 || i==10 || i==12){
+            broj_dana+=31;
+        }
+        else{
+            broj_dana+=30;
+        }
+    }
+    broj_dana+=dan;
+    return broj_dana;
+}
+
+void period(struct Student *studenti, int vel,int D){
+    int dani_prvog,dani_drugog;
+    struct Student *pok=studenti;
+    struct Student *temp;
+    struct Student *iza_kraja=studenti+vel;
+
+    for(;pok<iza_kraja-1;pok++){
+        temp=pok+1;
+        dani_prvog=racunaj_od_0000((*pok).datum_rodjenja);
+        for(;temp<iza_kraja;temp++){
+            dani_drugog=racunaj_od_0000((*temp).datum_rodjenja);
+            if(dani_prvog-dani_drugog==D || dani_drugog-dani_prvog==D){
+                printf("%s %s - %s %s\n", (*pok).ime, (*pok).prezime, (*temp).ime, (*temp).prezime);
+            }
+        }
+    }
+
+}
+void zapisi(struct Student *studenti, int vel){
+    int brojac=0;
+    FILE *file=fopen("studenti.dat", "wb");
+    struct Student *pok=studenti;
+    struct Student *iza_kraja=studenti+vel;
+    struct MiniStudent student;
+    for(;pok<iza_kraja;pok++){
+        strcpy(student.ime,(*pok).ime);
+        strcpy(student.prezime,(*pok).prezime);
+        student.datum_rodjenja.dan=(*pok).datum_rodjenja.dan;
+        student.datum_rodjenja.mjesec=(*pok).datum_rodjenja.mjesec;
+        student.datum_rodjenja.godina=(*pok).datum_rodjenja.godina;
+        fwrite(&student,sizeof(struct MiniStudent), 1,file);
+    }
+
+    fclose(file);
+}
+void promijeni(struct Student student,int n){
+    FILE *file=fopen("studenti.dat", "rb+");
+    struct MiniStudent temp;
+    strcpy(temp.ime,student.ime);
+    strcpy(temp.prezime,student.prezime);
+
+    //temp.ime=student.ime;
+    //temp.prezime=student.prezime;
+    temp.datum_rodjenja.dan=(unsigned char)student.datum_rodjenja.dan;
+    temp.datum_rodjenja.mjesec=(unsigned char)student.datum_rodjenja.mjesec;
+    temp.datum_rodjenja.godina=(unsigned short)student.datum_rodjenja.godina;
+    //printf("(%s %s)", temp.ime,temp.prezime);
+    int i;
+    int duzina=sizeof(struct MiniStudent);
+    fseek(file,duzina*(n),SEEK_SET);
+    //fputc(1,file);
+    fwrite(&temp,sizeof(struct MiniStudent), 1,file);
+    //rewind(file);
+    fclose(file);
+}
+
+int main() {
+	
+	return 0;
+}
