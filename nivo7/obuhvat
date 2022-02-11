@@ -1,0 +1,171 @@
+#include <stdio.h>
+#include <string.h>
+
+
+char* obuhvat(char* s,double x1,double y1,double x2,double y2)
+{
+	char *pok=s;
+	int neg=0;
+	char *poc_tacka,*kraj_tacka;
+	double a,b,x,y;
+    char *pom=pok;
+
+
+		if(*pom=='\0') {
+            return 0;
+        }
+
+
+	        while(*pom!='\0')
+	        {
+
+	    		if(*pom!='(') {
+                    return 0;
+                }
+	    		else pom++;
+
+	    		if(*pom==',') {
+                    return 0;
+                }
+
+				 while(*pom!=',')
+				 {
+				 	if((*pom<'0' || *pom>'9') && (*pom!='.' && *pom!='-')){ 
+                        return 0;
+                    }
+				 	if(*pom=='.' && *(pom-1)=='(') {
+                        return 0;
+                    }
+				    pom++;
+				 }
+
+			   	if(*pom!=',') {
+                   return 0;
+                }
+			   	else pom++;
+
+			   	if(*pom==')') {
+                    return 0;
+                }
+
+			   	while(*pom!=')')
+			   	{
+			   		if((*pom<'0' || *pom>'9') && (*pom!='.' && *pom!='-')){
+                        return 0;
+                    }
+				   	if(*pom=='.' && *(pom-1)==',') {
+                        return 0;
+                    }
+				    pom++;
+			   	}
+
+			 	if(*pom!=')'){
+                    return 0;
+                }
+				else pom++;
+
+			 	if(*pom!='\0') pom++;
+
+				if(*pom=='\0' && *(pom-1)!=')') {
+                    return 0;
+                }
+
+	    }
+
+
+		while(*pok!='\0')
+		{
+			if(*pok=='(')
+			{
+
+				poc_tacka=pok;
+				pok++;
+
+			neg=0;
+
+			if(*pok=='-')
+				{neg=1;pok++;}
+
+			x=0;
+			while(*pok>='0' && *pok<='9')
+			{
+
+				x=x*10+(*pok-'0');
+				pok++;
+			}
+
+
+			if(*pok=='.')
+			{
+				pok++;a=0;
+				while(*pok>='0' && *pok<='9')
+			    {
+					a=a*10+(*pok-'0');
+					pok++;
+			    }
+			    while(a>=1)
+			     	a/=10;
+
+			    x=x+a;
+			}
+
+			if(neg==1) x*=-1;
+
+			if(*pok==',') pok++;
+			neg=0;
+			if(*pok=='-')
+				{neg=1;pok++;}
+
+			y=0;
+			while(*pok>='0' && *pok<='9')
+			{
+				y=y*10+(*pok-'0');
+				pok++;
+			}
+
+			if(*pok=='.')
+			{
+				pok++;b=0;
+				while(*pok>='0' && *pok<='9')
+			    {
+				b=b*10+(*pok-'0');
+				pok++;
+			    }
+			    while(b>=1)
+			     	b=b/10;
+			    y=y+b;
+			}
+
+			if(neg==1) y*=-1;
+
+
+			if(x<x1 || x>x2 || y<y1 || y>y2)
+			{
+			   pok++;
+			   if(*pok==',') pok++;
+
+			   kraj_tacka=pok;
+
+				while(*kraj_tacka!='\0')
+				{
+					*poc_tacka++=*kraj_tacka++;
+				}
+			    *poc_tacka='\0';
+				pok=pok-(kraj_tacka-poc_tacka);
+
+			}
+		}else
+			pok++;
+
+		}
+		if(pok!=s) pok--;
+		if(*pok==',') *pok='\0';
+
+
+   return s;
+}
+
+int main() {
+	printf("Lekcija 7: Stringovi, Obuhvat");
+	return 0;
+}
