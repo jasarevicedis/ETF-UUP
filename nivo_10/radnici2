@@ -1,0 +1,79 @@
+#include <stdio.h>
+
+struct Radnik {
+    char ime[20];
+    char prezime[20];
+    int godina_rodjenja;
+    double plata;
+};
+
+int ucitaj_radnike(struct Radnik *radnici,int vel){
+    int br_ucitanih=0;
+    FILE *file=fopen("radnici.txt", "r");
+    if(file==NULL){
+        return 0;
+    }
+    int i=0;
+    while(fscanf(file, "%20s%20s%d%lf", radnici[i].ime, radnici[i].prezime, &radnici[i].godina_rodjenja, &radnici[i].plata)==4 && i+1<vel){
+        i++;
+    }
+    if(i==vel-1){
+        i++;
+    }
+    br_ucitanih=i;
+    fclose(file);
+    //printf("%d()", br_ucitanih);
+    return br_ucitanih;
+}
+int ucitaj_brojeve( int *brojevi,int vel){
+    int br_ucitanih=0;
+    FILE *file=fopen("brojevi.dat", "rb");
+    if(file==NULL){
+        return 0;
+    }
+    while(fread(brojevi,sizeof(int), 1, file)!=0)
+{
+    //printf("(%d)", *brojevi);
+    brojevi++;
+    br_ucitanih++;
+}    //br_ucitanih=vel;
+    fclose(file);
+    //printf("%d()", br_ucitanih);
+    return br_ucitanih;
+}
+
+double srednja(struct Radnik *radnici,int br_radnika, int *brojevi, int vel){
+    double sr_vrijednost=0;
+    int i;
+    int index;
+    int br_racunatih=0;
+
+    for(i=0;i<vel;i++){
+        index=brojevi[i];
+        
+        if(index<br_radnika && index>=0){
+            //printf("[%d]", index);
+            sr_vrijednost+=radnici[index].plata;
+            br_racunatih++;
+            //printf("%f()", sr_vrijednost);
+        }
+    }
+    //printf("{%d}", br_racunatih);
+    if(br_racunatih!=0){
+        sr_vrijednost/=(br_racunatih*1.0);
+    }
+    return sr_vrijednost;
+}
+int main() {
+    struct Radnik radnici[1000];
+    int kap_radnika=1000;
+    int kap_brojeva =1000;
+    int brojevi[1000];
+    if(ucitaj_radnike(radnici,kap_radnika)==0 || ucitaj_brojeve(brojevi,kap_brojeva)==0){
+        printf("Srednja vrijednost plate je: 0.00 KM.");
+        return 0;
+    }
+    double rez=srednja(radnici,ucitaj_radnike(radnici,kap_radnika), brojevi, ucitaj_brojeve(brojevi,kap_brojeva));
+    printf("Srednja vrijednost plate je: %.2f KM.", rez);
+    return 0;
+}
