@@ -1,0 +1,199 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Datum {
+        int dan, mjesec, godina;
+};
+
+struct Vozilo {
+        char model[50], vrsta_goriva[20];
+        struct Datum registracija;
+};
+
+struct Osoba {
+    char ime_prezime[50];
+    struct Datum datum_rodjenja;
+    struct Vozilo vozilo;
+};
+
+int je_li_prijestupna(int godina){
+    if((godina%4==0 && godina%100!=0) || (godina%400==0)){
+        return 1;
+    }
+    return 0;
+}
+
+int broj_dana_00(struct Datum datum){
+    int dani=datum.dan;
+    int mjeseci=datum.mjesec;
+    int godine=datum.godina;
+    int i=0;
+    int suma=0;
+
+    for(i=1;i<godine;i++){
+        if((i%4==0 && i%100!=0) ||(i%400==0)){
+            suma+=366;
+        }
+        else{
+            suma+=365;
+        }
+    }
+    for(i=1;i<mjeseci;i++){
+        if(i==1 || i==3 || i==5 || i==7 || i==8 || i==10 || i==12){
+            suma+=31;
+        }
+        else if(i==2){
+            if(je_li_prijestupna(godine)){
+                suma+=29;
+            }
+            else{
+                suma+=28;
+            }
+        }
+        else{
+            suma+=30;
+        }
+    }
+    return suma;
+}
+
+
+
+int ucitaj(struct Osoba *osoba, int vel, const char *datoteka){
+    int br_ucitanih=0;
+    FILE *file=fopen(datoteka, "r");
+    char imeprezime[50];
+    struct Osoba *pok=osoba;
+    char c;
+    int i=0,j=0;
+    
+while((c=fgetc(file))!=EOF){
+    (*pok).ime_prezime[0]=c;
+    j=1;
+    while((c=fgetc(file))!=','){
+        (*pok).ime_prezime[j]=c;
+        if(j==49){
+            break;
+        }
+        j++;
+        
+    }
+    (*pok).ime_prezime[j]='\0';
+    if(j==49){
+        while(c!=','){
+            c=fgetc(file);
+        }
+    }
+    
+    fscanf(file,"%d,%d,%d,",&(*pok).datum_rodjenja.dan,&(*pok).datum_rodjenja.mjesec,&(*pok).datum_rodjenja.godina);
+
+    j=0;
+    while((c=fgetc(file))!=','){
+        (*pok).vozilo.model[j]=c;
+        if(j==49){
+            break;
+        }
+        j++;
+        
+    }
+    (*pok).vozilo.model[j]='\0';
+
+    if(j==49){
+        while(c!=','){
+            c=fgetc(file);
+        }
+    }
+
+    j=0;
+    while((c=fgetc(file))!=','){
+        (*pok).vozilo.vrsta_goriva[j]=c;
+        if(j==49){
+            break;
+        }
+        j++;
+        
+    }
+    (*pok).vozilo.vrsta_goriva[j]='\0';
+
+    if(j==49){
+        while(c!=','){
+            c=fgetc(file);
+        }
+    }
+
+    fscanf(file,"%d,%d,%d\n",&(*pok).vozilo.registracija.dan,&(*pok).vozilo.registracija.mjesec,&(*pok).vozilo.registracija.godina);
+    
+    
+    pok++;
+    i++;
+    if(pok==osoba+vel){
+        break;
+    }
+    
+}
+    br_ucitanih=i;
+    fclose(file);
+    return br_ucitanih;
+}
+
+void ispisi(struct Osoba *osoba, int vel){
+    struct Osoba *pok=osoba;
+    struct Osoba *iza_kraja=osoba+vel;
+
+    for(;pok<iza_kraja;pok++){
+        printf("%s - %s\n", (*pok).ime_prezime, (*pok).vozilo.model);
+    }
+
+}
+void vozaci(struct Osoba *osoba, int vel){
+    struct Osoba *najstariji;
+    struct Osoba *pok=osoba;
+    struct Osoba *iza_kraja=osoba+vel;
+
+    int min=1000000;
+    int br_dana;
+    for(;pok<iza_kraja;pok++){
+        br_dana=broj_dana_00((*pok).datum_rodjenja);
+        if(br_dana<min){
+            min=br_dana;
+            najstariji=pok;
+        }
+    }
+    //printf("(%s)", (*najstariji).ime_prezime);
+    pok=osoba;
+    for(;pok<iza_kraja;pok++){
+        if(
+            /*((broj_dana_00((*pok).datum_rodjenja) - broj_dana_00((*najstariji).datum_rodjenja))<366 && (broj_dana_00((*pok).datum_rodjenja) - broj_dana_00((*najstariji).datum_rodjenja)) >-366) */ (*pok).datum_rodjenja.godina==(*najstariji).datum_rodjenja.godina && strcmp((*pok).vozilo.vrsta_goriva,(*najstariji).vozilo.vrsta_goriva)==0 && strcmp((*pok).ime_prezime,(*najstariji).ime_prezime)!=0
+        ){
+            printf("%s\n", (*pok).ime_prezime);
+        }
+    }
+}
+
+void zapisi_vozila(struct Osoba *osoba, int vel){
+    FILE *file = fopen("vozila.dat", "wb");
+    struct Osoba *pok=osoba;
+    struct Osoba *iza_kraja=osoba+vel;
+    struct Osoba *temp=NULL;
+
+    for(;pok<iza_kraja;pok++){
+        temp=osoba;
+        int provjera=0;
+        for(;temp<pok;temp++){
+            if(strcmp((*temp).vozilo.model, (*pok).vozilo.model)==0 && strcmp((*temp).vozilo.vrsta_goriva, (*pok).vozilo.vrsta_goriva)==0 && (*pok).vozilo.registracija.dan==(*temp).vozilo.registracija.dan && (*pok).vozilo.registracija.mjesec==(*temp).vozilo.registracija.mjesec && (*pok).vozilo.registracija.godina==(*temp).vozilo.registracija.godina){
+                provjera++;
+            }
+        }
+        if(provjera==0){
+            fwrite(&pok->vozilo, sizeof(struct Vozilo), 1, file);
+        }
+    }
+
+
+    fclose(file);
+}
+
+int main() {
+	printf("Lekcija 10: Datoteke sa strukturama, Vozila i osobe");
+	return 0;
+}
