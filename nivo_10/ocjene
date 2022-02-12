@@ -1,0 +1,155 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Datum { int dan, mjesec, godina; };
+struct Predmet {
+    int id;
+    char naziv[100];
+    double ects;
+};
+struct Ocjena {
+    char imeprezime[100];
+    int ocjena;
+    struct Predmet predmet;
+    struct Datum datum;
+};
+
+int ucitaj_predmete(struct Predmet *predmeti){
+    int br_ucitanih=0,i=0;
+    FILE *file = fopen("predmeti.bin", "rb");
+
+    while(fread(predmeti,sizeof(struct Predmet), 1,file)!=0){
+        predmeti++;
+        br_ucitanih++;
+    }
+    fclose(file);
+    return br_ucitanih;
+}
+
+int ucitaj_ocjene (struct Predmet *predmeti,int vel, struct Ocjena *ocjene){
+    int i=0;
+    int br_ucitanih=0;
+    
+    int id_studenta=-1;
+    unsigned short id_stud=0;
+    char ime_stud[100];
+    struct Ocjena *iza_kraja=ocjene;
+    /*
+    while(iza_kraja!=NULL){
+        iza_kraja++;
+    }int duzina=iza_kraja-ocjene;
+    */
+
+    FILE *bin=fopen("studenti.bin", "rb");
+    FILE *txt = fopen("ocjene.txt", "r");
+    /*
+    fseek(txt,0,SEEK_END);
+    fprintf(txt," 3");
+    fseek(txt,0,SEEK_SET);
+    */
+    int k;
+    int x,y;
+    char c;
+    int prvi,drugi,treci,cetvrti,peti,sesti;
+    
+    while(i<1000 && (fscanf(txt,"%d, %d, %d, %d, %d, %d\n", &prvi,&drugi,&treci,&cetvrti,&peti,&sesti))==6 ){
+        id_studenta=prvi;
+        ocjene[i].ocjena=drugi;
+        ocjene[i].predmet.id=treci;
+        ocjene[i].datum.dan=cetvrti;
+        ocjene[i].datum.mjesec=peti;
+        ocjene[i].datum.godina=sesti;
+        fseek(bin,0,SEEK_SET);
+        while(id_stud!=id_studenta){
+           fread(&id_stud,sizeof(unsigned short),1,bin);
+            
+           fread(&ime_stud,100,1,bin);
+           /*
+           if((c=fgetc(txt))==EOF){
+               return i;
+           }
+           else{
+               fseek(txt,-1,SEEK_CUR);
+           }
+            */
+        }
+        //printf("%s{}", ime_stud);
+        strcpy(ocjene[i].imeprezime,ime_stud);
+        for(k=0;k<vel;k++){
+            if(predmeti[k].id==ocjene[i].predmet.id){
+                strcpy(ocjene[i].predmet.naziv,predmeti[k].naziv);
+                
+            }
+        }
+        i++;
+    }
+
+
+    
+    fclose(txt);
+    fclose(bin);
+    br_ucitanih=i;
+    return br_ucitanih;
+}
+
+void statistika(struct Predmet *predmeti, int br_predmeta, struct Ocjena *ocjene, int br_ocjena){
+    FILE *file =fopen("statistika.txt", "w");
+    struct Predmet *pred=predmeti;
+    struct Predmet *kraj_predmeta=predmeti+br_predmeta;
+    struct Ocjena *ocj=ocjene;
+    struct Ocjena *kraj_ocj=ocjene+br_ocjena;
+    double suma,prosjek;
+    int brojac;
+    int i;
+    double prosjeci[100]={0};
+
+    //pred=predmeti;
+    i=0;
+    for(;pred<kraj_predmeta;pred++){
+        ocj=ocjene;
+        prosjek=0;
+        suma=0;
+        brojac=0;
+        for(;ocj<kraj_ocj;ocj++){
+            if((*ocj).predmet.id==(*pred).id){
+                suma+=(*ocj).ocjena;
+                brojac++;
+            }
+        }
+        if(brojac!=0){
+            prosjek=suma/(brojac*1.0);
+            prosjeci[i]=prosjek;
+            
+        }
+        i++;
+    }
+    
+   int j;
+   double temp;
+   struct Predmet priv;
+    for(i=0;i<br_predmeta;i++){
+        for(j=i+1;j<br_predmeta;j++){
+            if(prosjeci[i]<prosjeci[j]){
+                temp=prosjeci[i];
+                priv=predmeti[i];
+
+                prosjeci[i]=prosjeci[j];
+                prosjeci[j]=temp;
+
+                predmeti[i]=predmeti[j];
+                predmeti[j]=priv;
+            }
+        }
+    }
+    for(i=0;i<br_predmeta;i++){
+        if(prosjeci[i]>0){
+            fprintf(file, "%s,%.2lf\n", predmeti[i].naziv,prosjeci[i]);
+        }
+    }
+
+    fclose(file);
+}
+int main() {
+	printf("Lekcija 10: Datoteke sa strukturama, Ocjene");
+	return 0;
+}
