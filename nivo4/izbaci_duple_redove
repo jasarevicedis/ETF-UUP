@@ -1,0 +1,106 @@
+#include <stdio.h>
+
+int main() {
+    int m,n,i,j;
+    int mat[200][200];
+	do {
+        printf("Unesite brojeve M i N: ");
+        scanf("%d %d", &m, &n);
+        if(m>200 || n>200 || m<=0 || n<=0){
+            printf("Brojevi nisu u trazenom opsegu.\n");
+        }
+    }while (m>200 || n>200 || m<=0 || n<=0);
+    printf("Unesite elemente matrice: ");
+    for(i=0;i<m;i++){
+        for(j=0;j<n;j++){
+            scanf("%d", &mat[i][j]);
+        }
+    }
+    //izbacivanje redova
+    int k,l,p;
+    int brojac;
+    if(m>=1){
+    for(i=0;i<m-1;i++){
+        for(k=i+1;k<m;k++){
+            brojac=0;
+            for(j=0;j<n;j++){
+                if(mat[i][j]==mat[k][j]){
+                    brojac++;
+                }
+            }
+            if(brojac==n){
+                //red se poklapa
+                for(l=k;l<m-1;l++){
+                    for(p=0;p<n;p++){
+                        mat[l][p]=mat[l+1][p];
+                    }
+                }
+            m--;
+            if(i>0){
+                i--;
+            }
+            }
+        }
+        if(m==2){
+            brojac=0;
+            for(j=0;j<n;j++){
+                if(mat[0][j]==mat[1][j]){
+                    brojac++;
+                }
+            }
+            if(brojac==n){
+                m--;
+            }
+        }
+    }
+    }
+    //izbacivanje kolona 
+    brojac=0;
+    if(n>=1){
+    for(i=0;i<n-1;i++){
+        
+        for(k=i+1;k<n;k++){
+            
+            brojac=0;
+            for(j=0;j<m;j++){
+                if(mat[j][i]==mat[j][k]){
+                    brojac++;
+                }
+            }
+            if(brojac==m){
+                //red se poklapa
+                for(l=k;l<n-1;l++){
+                    for(p=0;p<m;p++){
+                        mat[p][l]=mat[p][l+1];
+                    }
+                }
+            n--;
+            if(i>0){
+                i--;
+            }
+            }
+        }
+        if(n==2){
+            brojac=0;
+            for(j=0;j<m;j++){
+                if(mat[j][0]==mat[j][1]){
+                    brojac++;
+                }
+            }
+            if(brojac==m){
+                n--;
+            }
+        }
+    }
+    }
+    
+    //ispis
+    printf("Nakon izbacivanja redova/kolona matrica glasi:\n");
+    for(i=0;i<m;i++){
+        for(j=0;j<n;j++){
+            printf("    %d", mat[i][j]);
+        }
+        printf("\n");
+    }
+	return 0;
+}
