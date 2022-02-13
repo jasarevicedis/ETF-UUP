@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <math.h>
+
+//ako su sacinjeni od istih cifara
+int jesu_li_iste(int prvi,int drugi){
+    int i;
+    int broj;
+    int nadjen;
+    for(i=0;i<10;i++){
+        broj=prvi;
+        nadjen=0;
+        while(broj>0){
+            if(broj%10==i){
+                nadjen++;
+                break;
+            }
+            broj/=10;
+        }
+        broj=drugi;
+        while(broj>0){
+            if(broj%10==i){
+                nadjen++;
+                break;
+            }
+            broj/=10;
+        }
+        if(nadjen==1){
+            return 0;
+        }
+    }
+    return 1;
+}
+
+int izbaci_iste_cifre(int *nizA,int velA, int *nizB, int velB){
+    int *clanB=nizB;
+    int *temp=nizB;
+    int *iza_krajaB=nizB+velB;
+    int *clanA=nizA;
+    int *iza_krajaA=nizA+velA;
+    int test;
+    for(;clanB<iza_krajaB;clanB++){
+        clanA=nizA;
+        for(;clanA<iza_krajaA;clanA++){
+            test=jesu_li_iste(*clanA, *clanB);
+            if(test==1){
+                //printf("{%d %d %d}\n",test,*clanB, *clanA);
+                temp=clanB;
+                for(;temp<iza_krajaB-1;temp++){
+                    *temp=*(temp+1);
+                }
+                velB--;
+                clanB--;
+                iza_krajaB--;
+                break;
+            }
+        }
+    }
+    return velB;
+}
+
+
+
+
+int main(){
+    int A[100], B[100];
+    int i=0,j;
+    printf("Unesite niz A: ");
+    do {
+        scanf("%d", &A[i]);
+        i++;
+    }while (A[i-1]!=-1 && i<100);
+    i--;
+    printf("Unesite niz B: ");
+    j=0;
+    do {
+        scanf("%d", &B[j]);
+        j++;
+    }while (B[j-1]!=-1 && j<100);
+    j--;
+    //printf("\n");
+    int vel=izbaci_iste_cifre(A, i,B, j);
+    for(i=0;i<vel;i++){
+        if(i==vel-1){
+            printf("%d.", B[i]);
+
+        }
+        else{
+            printf("%d,", B[i]);
+
+        }
+       
+
+    }
+
+    return 0;
+}
