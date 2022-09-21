@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    int S,V;
+	int x,y;
+    int i,j;
+    int centar_x,centar_y;
+    
+    int mat[100][100];
+    do {
+        printf("Unesite sirinu i visinu matrice: ");
+        scanf("%d %d", &S, &V);
+    }while (S >100 || V>100 || S<0 || V<0);
+    printf("Unesite X i Y: ");
+    scanf("%d %d", &x, &y);
+    
+    centar_y=(int)((S*1.0)/2);
+    centar_x=(int)((V*1.0)/2);
+    int udaljenost,udaljenost2,dist;
+    
+    for(i=0;i<V;i++){
+        for(j=0;j<S;j++){
+            //prsten nalazimo iz krace udaljenosti;
+            udaljenost=centar_y-j;
+            if(udaljenost<0){
+                udaljenost*=-1;
+            }
+            udaljenost2 =centar_x-i;
+            if(udaljenost2<0){
+                udaljenost2*=-1;
+            }  
+
+            if(udaljenost>udaljenost2){
+                dist=udaljenost;
+            }     
+            else {
+                dist=udaljenost2;
+            }
+            if(dist%2==0){
+                mat[i][j]=x;
+                if(i-1==j && i<=centar_x){
+                    mat[i][j]=y;
+                }
+                
+            }
+            else{
+                mat[i][j]=y;
+                if(i-1==j && i<=centar_x){
+                    mat[i][j]=x;
+                }
+            }
+        }
+    }
+    for(i=0;i<V;i++){
+        for(j=0;j<S;j++){
+            printf("%4d ", mat[i][j]);
+        }
+        printf("\n");
+    }
+	return 0;
+}
