@@ -1,0 +1,59 @@
+#include <stdio.h>
+
+void zadatak2(char *recenica, char *prazan){
+if(*recenica!='\0'){
+        
+    
+    int histogram[26]={0};
+    int i;
+    char *pok=recenica;
+    char *iza_kraja=recenica;
+    while(*iza_kraja!='\0'){
+        iza_kraja++;
+
+    }
+    char *pocetak_rijeci=NULL;
+    char *ispis=NULL;
+    int max=0;
+    for(;pok<iza_kraja;pok++){
+        if((*pok>='a' && *pok<='z') ||(*pok>='A' && *pok<='Z' )){
+            pocetak_rijeci=pok;
+            for(i=0;i<26;i++){
+                histogram[i]=0;
+            }
+            while((*pok>='a' && *pok<='z') ||(*pok>='A' && *pok<='Z' )){
+                if(*pok>='a' && *pok<='z'){
+                    i=*pok-97;
+                }
+                else if(*pok>='A' && *pok<='Z' ){
+                    i=*pok-65;
+                }
+                histogram[i]++;
+                pok++;
+            }
+            
+            for(i=0;i<26;i++){
+                if(histogram[i]>=max){
+                    ispis=pocetak_rijeci;
+                    max=histogram[i];
+                    
+                }
+            }
+            //printf("%d)", max);
+        }
+    }
+    //printf("%c %d", *ispis, max);
+    //ispis= pocetak_rijeci;
+    while((*ispis>='a' && *ispis<='z') ||(*ispis>='A' && *ispis<='Z' )){
+        *prazan=*ispis;
+        prazan++;
+        ispis++;
+    }
+    *prazan='\0';
+}
+}
+
+int main() {
+	printf("Ispit 1, Zadatak 2");
+	return 0;
+}
