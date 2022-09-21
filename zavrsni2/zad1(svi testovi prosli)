@@ -1,0 +1,68 @@
+#include <stdio.h>
+
+
+
+void popuni_matricu(double mat[100][100],int m,int n, double x){
+    int i,j,k;
+    int x_dist,y_dist;
+    double broj=x;
+    int vely=2*m+1;
+    int velx=2*n+1;
+
+    for(i=0;i<vely;i++){
+        for(j=0;j<velx;j++){
+            broj=x;
+            //printf("%lf()" ,broj);
+            x_dist=n-j;
+            y_dist=m-i;
+            if(x_dist>0){
+                for(k=0;k<x_dist;k++){
+                    broj*=0.5;
+                    //printf("(%lf 1)", broj);
+
+                }
+            }
+            if(x_dist<0){
+                x_dist*=-1;
+                for(k=0;k<x_dist;k++){
+                    broj*=2.0;
+                    //printf("(%lf 2)", broj);
+
+                }
+            }
+
+            if(y_dist>0){
+                for(k=0;k<y_dist;k++){
+                    broj-=1;
+                    //printf("(%lf 3)", broj);
+
+                }
+            }
+            if(y_dist<0){
+                y_dist*=-1;
+                for(k=0;k<y_dist;k++){
+                    broj+=1;
+                    //printf("(%lf 4)", broj);
+                }
+            }
+            mat[i][j]=broj;
+        }
+        //printf("%lf{}", broj);
+        mat[i][j]=broj;
+    }
+    /*
+    printf("Matrica glasi: \n");
+    for(i=0;i<2*m+1;i++){
+        for(j=0;j<2*n+1;j++){
+            printf("%g ", mat[i][j]);
+        }
+        printf("\n");
+    }
+    */
+}
+
+int main() {
+	printf("Ispit 2, Zadatak 1");
+	return 0;
+}
+
