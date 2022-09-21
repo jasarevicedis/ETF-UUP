@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+/*
+Potrebno je napisati funkciju sa prototipom:
+int prebroji_ime_u_datoteci(const char* datoteka, const char* ime)
+Funkcija treba u datoteci datoteka pronaći riječ ime i preobrojati koliko puta se nalazi u
+datoteci. Ako datoteka ne postoji, treba ispisati poruku "Datoteka ne postoji" i vratiti -1.
+U funkciji nije dozvoljeno deklarisati nikakav pomoćni string ili niz. ime ne mora biti
+odvojeno razmacima ili na neki drugi način. Funkcija ne treba razlikovati velika i mala
+slova*/
+int ime_u_datoteci(const char* datoteka, const char* ime){
+    int i=0;
+    int broj_slova=strlen(ime);
+    FILE *input = fopen(datoteka, "r");
+    if(input==NULL){
+        printf("Datoteka ne postoji\n");
+        return -1;
+    }
+    int broj_rijeci=0;
+    int brojac=0;
+    char c;
+    while((c=fgetc(input))!=EOF){
+        if(c==*ime || (c==*ime+'A'-'a' && *ime<='z') || (c==*ime-('A'-'a') && *ime>='A')){
+            brojac=1;
+            for(i=0;i<broj_slova;i++){
+                c=fgetc(input);
+                if(c=='\0')
+                    break;
+                if(c==*(ime+i+1) || (c==*(ime+i+1)+('A'-'a') && *(ime+i+1)<='z') || (c==*(ime+i+1)-('A'-'a') && *(ime+i+1)>='A'))
+                    brojac++;
+            }
+            fseek(input,SEEK_CUR,(-1)*broj_slova);
+            if(brojac==broj_slova){
+                broj_rijeci++;
+            }
+        }
+        if(c=='\0')
+            break;
+    }
+    fclose(input);
+    return broj_rijeci;
+}
+int main() {
+	printf("Ispit 3, Zadatak 4");
+	return 0;
+}
