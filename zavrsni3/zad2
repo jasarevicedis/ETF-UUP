@@ -1,0 +1,71 @@
+#include <stdio.h>
+/*
+Napisati funkciju zadatak2 koja prima dva stringa: prvi string predstavlja neku
+rečenicu, a drugi je prazan. Potrebno je u rečenici pronaći slovo koje se najviše puta
+ponavlja, te u drugi string upisati posljednju riječ u kojoj se nalazi to slovo. Riječ se
+definiše kao niz velikih i malih slova. Funkcija ne treba razlikovati velika i mala slova.
+Npr. ako string glasi:
+"VRh kraj Tri Pet"
+Potrebno je upisati u drugi string riječ "Tri" jer se slovo R pojavljuje 3 puta i ovo je
+posljednja riječ u kojoj se pojavljuje.
+U zadatku nije dozvoljeno koristiti funkcije iz biblioteka string.h, stdlib.h kao ni funkcije
+sprintf i sscanf iz biblioteke stdio.h. Dodati: zabranjeno deklarisati pomoćne nizove ili
+stringove.
+*/
+
+void zadatak2(char *rec, char *prazan){
+    int max=0;
+    int i=0;
+    int brojac=0;
+    char *pok=rec;
+    char trazeni='a';
+    char *iza_kraja=rec;
+    while(*iza_kraja!='\0'){
+        iza_kraja++;
+    }
+    for(i='a';i<'z';i++){
+        brojac=0;
+        pok=rec;
+        for(;pok<iza_kraja;pok++){
+            if(*pok==i || *pok ==i+('A'-'a'))
+                brojac++;
+        }
+        if(brojac>max){
+            max=brojac;
+            trazeni=i;
+        }
+    }
+    pok=rec;
+    //printf("%c\n", trazeni);
+    char *zadnji=rec;
+    for(;pok<iza_kraja;pok++){
+        if(*pok==trazeni || *pok==trazeni+('A'-'a'))
+            zadnji=pok;
+    }
+    //printf("[%c]", *zadnji);
+    while((*zadnji>='a' && *zadnji<='z')||(*zadnji>='A' && *zadnji<='Z')){
+        zadnji--;
+    }
+    //printf("[%c]", *pok);
+    zadnji++;
+    
+    //printf("[%c]", *pok);
+
+   
+    while(((*zadnji>='a' && *zadnji<='z')||(*zadnji>='A' && *zadnji<='Z')) ){
+        *prazan=*zadnji;
+        *(prazan+1)='\0';
+        if(zadnji+1==iza_kraja)
+            break;
+        prazan++;
+        zadnji++;
+        
+    };
+    
+    
+}
+
+int main() {
+
+	return 0;
+}
