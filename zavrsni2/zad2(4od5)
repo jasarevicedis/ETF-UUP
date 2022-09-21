@@ -1,0 +1,75 @@
+#include <stdio.h>
+
+void popuni_recenicu(char *str,char **rijeci,int vel){
+    char *pok=str;
+    char *poc=str;
+    char *iza_kraja=str;
+    char *pocetak_razmaka=NULL;
+    while(*iza_kraja!='\0'){
+        iza_kraja++;
+    }
+    int broj_razmaka=0;
+    for(;pok<iza_kraja;pok++){
+        
+        if(*pok==' ' && *(pok+1)==' '){
+            broj_razmaka++;
+        }
+        if(pok!=str && (*(pok-1)==' ' && *pok==' ' && *(pok+1)!=' ' )){
+            goto IZLAZ;//mrzim ga al moram, exit(1) ne moze :)
+            break;
+        }
+        
+        
+    }
+    IZLAZ:
+    if(*poc!=' '){
+        broj_razmaka-=1;
+    }
+     pocetak_razmaka=pok-broj_razmaka;
+    if(*(iza_kraja-1)==' '){
+        broj_razmaka+=1;
+        //pocetak_razmaka++;
+    }//jer dva se podrazumijevaju
+   
+    //printf("%d{}", broj_razmaka);
+
+    //prebrojavanje rijeci
+    int i;
+    char *temp=NULL;
+    int broj_slova;
+    int trazeni_idx=0;
+    int k;
+    for(i=0;i<vel;i++){
+        broj_slova=0;
+        temp=&*rijeci[i];
+        k=0;
+        while(temp[k]!='\0'){
+            broj_slova++;
+            k++;
+        }
+        
+        //printf("%c %c()",temp[0],temp[1]);
+        if(broj_slova==broj_razmaka){
+            trazeni_idx=i;
+            break;
+        }
+    }
+    //printf("%d()", trazeni_idx);
+    char *iza_kraja_razmaka=pocetak_razmaka+broj_razmaka;
+    int index=0;
+    //printf("%c()", *pocetak_razmaka);
+    
+    for(;pocetak_razmaka<iza_kraja_razmaka;pocetak_razmaka++){
+        *pocetak_razmaka=rijeci[trazeni_idx][index];
+        //printf("{%c}", rijeci[trazeni_idx][index]);
+        index++;
+        //printf("(%c)", *pocetak_razmaka);
+    }
+    
+    //return str;
+}
+
+int main() {
+	printf("Ispit 2, Zadatak 2");
+	return 0;
+}
