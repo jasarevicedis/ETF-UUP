@@ -1,0 +1,56 @@
+//ne bas idealno rjesenje
+
+#include <stdio.h>
+/*
+Korisnik najprije unosi širinu S i visinu V matrice cijelih
+brojeva (ne veće od 100). Zatim korisnik unosi cijele brojeve X , Y i Z.
+Matricu treba popuniti brojevima X i Y na sljedeći način: u sredini matrice tj. Elementima
+koji odgovaraju unutrasnjoj matrici dimenzija polovine S i polovine V, nalaze se
+elementi X . Zatim se matrica popunjava brojem Y tako da cine pojas oko matrice sa
+elementima X tako da se dobije simetrična matrica. Za dimenzije S i V manje od 3,
+program ispisuje gresku: “Greska u unosu dimenzija!”. Primjer izgleda matrice za S=5,
+V=4, X=4 i Y=6 dat je ispod:
+6 6 6 6 6
+6 4 4 4 6
+6 4 4 4 6
+6 6 6 6 6
+Ovako popunjenu matricu treba na kraju ispisati na ekran.*/
+
+int main() {
+    int s=0,v=0;
+    int x=0,y=0;
+    int mat[100][100];
+    printf("Unesite sirinu i visinu matrice: ");
+	scanf("%d", &s);
+    scanf("%d", &v);
+    
+    
+    printf("Unesite X i Y: \n");
+    scanf("%d %d", &x,&y);
+    if(s<3 || v< 3){
+        printf("Greska");
+        return 0;
+    }
+    int i,j;
+    for(i=0;i<v;i++){
+        for(j=0;j<s;j++){
+            mat[i][j]=x;
+        }
+    }
+    int p=0;
+    if(s==3 || v==3) p=1;
+    for(i=0;i<v;i++){
+        for(j=0;j<s;j++){
+            if(i<v/4+p || i>=v-v/4-p || j<s/4+p || j>=s-s/4-p) 
+                mat[i][j]=y;
+        }
+    }
+    
+    for(i=0;i<v;i++){
+        for(j=0;j<s;j++){
+            printf("%d ", mat[i][j]);
+        }
+        printf("\n");
+    }
+	return 0;
+}
