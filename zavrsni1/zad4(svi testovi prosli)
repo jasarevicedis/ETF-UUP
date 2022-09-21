@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <string.h>
+
+int ime_u_datoteci(const char *datoteka, const char *ime){
+    const char *poc =ime;
+    const char *pok =ime;
+    int lazni_pok=0;
+    int i,brojac;;
+    int duzina_imena=strlen(ime);
+    char c,p;
+    FILE *input=fopen(datoteka, "r");
+    if(input==NULL){
+        printf("Datoteka ne postoji\n");
+        return -1;
+    }
+    while((c=fgetc(input))!=EOF){
+        lazni_pok++;
+        if(c==*ime){
+            pok=poc;
+            pok++;
+            brojac=1;
+            for(i=1;i<duzina_imena;i++){
+                p=fgetc(input);
+                if(p==*pok){
+                    brojac++;
+                    //printf("%d", brojac);
+                }
+                
+                
+                //printf("%c", *pok);
+                pok++;
+            }
+            if(brojac==duzina_imena){
+                return 1;
+            }
+            else{
+                fseek(input,lazni_pok,SEEK_SET);
+            }
+            //printf("%c",c);
+        }
+        
+        
+    }
+    fclose(input);
+    return 0;
+
+}
+
+int main() {
+	printf("Ispit 1, Zadatak 4");
+	return 0;
+}
