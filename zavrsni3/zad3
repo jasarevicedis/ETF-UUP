@@ -1,0 +1,23 @@
+#include <stdio.h>
+/*
+Izbrojite broj cifara u broju koristeći isključivo rekurziju. Unesite broj iz konzole i
+ispišite rezultat u konzolu.
+Napomena: Rjesenja koja ne koriste isključivo rekurziju ce biti bodovana sa 0 bodova
+bez obzira sto testovi prolaze.
+*/
+int prebroji(broj){
+    static int br_cifara;
+    if(broj>0){
+        br_cifara++;
+        prebroji(broj/10);
+    }
+    else return 0;
+    return br_cifara;
+}
+int main() {
+    int broj;
+    int broj_cifara;
+	scanf("%d", &broj);
+    printf("%d", prebroji(broj));
+	return 0;
+}
